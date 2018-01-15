@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="default_bg">#fafafa</color>
+
+    <color name="text">#dd000000</color>
+    <color name="text_second">#88000000</color>
+    <color name="disabled_or_hint">#60000000</color>
+    <color name="dividers">#1f000000</color>
+
+    <color name="text_dark">#ffffff</color>
+    <color name="text_second_dark">#b2ffffff</color>
+    <color name="disabled_or_hint_dark">#4cffffff</color>
+    <color name="dividers_dark">#1fffffff</color>
+</resources>

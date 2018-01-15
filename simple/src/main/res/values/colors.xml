@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="tab1">#3b8dcf</color>
+    <color name="tab2">#38c44d</color>
+    <color name="tab3">#cf292f</color>
+
+    <integer-array name="tab_colors">
+        <item>@color/tab1</item>
+        <item>@color/tab2</item>
+        <item>@color/tab3</item>
+    </integer-array>
+</resources>

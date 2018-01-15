@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="cn.manfi.android.project.simple.common.net.RGDApiService"/>
+
+        <import type="cn.manfi.android.project.base.common.FormatUtils"/>
+
+        <variable
+            name="itemViewModel"
+            type="cn.manfi.android.project.simple.ui.NewsListItemViewModel"/>
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp">
+
+        <android.support.design.internal.ForegroundLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@android:color/background_light"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="horizontal">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                app:actualImageScaleType="centerCrop"
+                app:imgUri="@{RGDApiService.API_URL+itemViewModel.news.get().getImg()}"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="4dp">
+
+                <TextView
+                    android:id="@+id/tv_Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:lines="2"
+                    android:text="@{itemViewModel.news.get().getTitle()}"
+                    android:textColor="@color/text"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:text="'Bit Mac' projects commence 'Bit Mac' projects commence 'Bit Mac' projects commence 'Bit Mac' projects commence"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_Time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text='@{FormatUtils.formatTime(itemViewModel.news.get().getNewstime()*1000, "yyyy-MM-dd")}'
+                        android:textColor="@color/text_second"
+                        android:textSize="10sp"
+                        tools:text="4 hours ago"/>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="14dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/dividier_horizontal"/>
+
+                    <TextView
+                        android:id="@+id/tv_Promulgator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@{itemViewModel.news.get().getClassname()}"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="10sp"
+                        tools:text="Guangdong News Now"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.design.internal.ForegroundLinearLayout>
+    </FrameLayout>
+</layout>

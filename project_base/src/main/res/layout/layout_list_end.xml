@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <import type="android.text.TextUtils"/>
+
+        <variable
+            name="viewModel"
+            type="cn.manfi.android.project.base.ui.base.ListEndViewModel"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <TextView
+            android:id="@+id/tv_Loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="8dp"
+            android:text="@{viewModel.endText}"
+            android:textColor="@color/text_second"
+            android:textSize="12sp"
+            android:visibility="@{TextUtils.isEmpty(viewModel.endText) ? View.GONE : View.VISIBLE}"
+            tools:text="正在加载更多"/>
+
+        <ProgressBar
+            android:id="@+id/pb_Loading"
+            style="?android:progressBarStyleSmallInverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@id/tv_Loading"
+            android:visibility="@{viewModel.isProgressVisable ? View.VISIBLE : View.GONE}"/>
+    </RelativeLayout>
+</layout>

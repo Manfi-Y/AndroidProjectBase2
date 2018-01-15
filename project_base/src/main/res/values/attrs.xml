@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="clickCommand" format="reference"/>
+
+    <attr name="imgUri" format="string"/>
+
+    <declare-styleable name="View">
+        <attr name="clickCommand"/>
+    </declare-styleable>
+
+    <declare-styleable name="TextView">
+        <attr name="changeText" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="AdapterView">
+        <!-- require ReplyCommand<Integer> count of list items-->
+        <attr name="onLoadMoreCommadn"/>
+    </declare-styleable>
+
+    <declare-styleable name="RecyclerView" parent="AdapterView">
+    </declare-styleable>
+
+    <declare-styleable name="SwipeRefreshLayout">
+        <attr name="onRefreshCommand" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="ImageView">
+        <attr name="clickCommand"/>
+        <!--  load bitmap from uri(string type) -->
+        <attr name="imgUri"/>
+        <!--width for ResizeOptions (use Fresco to load bitmap). -->
+        <attr name="request_width" format="integer"/>
+        <!--height for ResizeOptions (use Fresco to load bitmap). -->
+        <attr name="request_height" format="integer"/>
+        <attr name="placeholderImageRes" format="reference|color"/>
+        <!--  require ReplyCommand<Bitmap> -->
+        <attr name="onSuccessCommand" format="reference"/>
+        <!--require ReplyCommand<CloseableReference<CloseableImage>> -->
+        <attr name="onFailureCommand" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="SimpleDraweeView">
+        <!-- Fresco -->
+        <attr name="imgUri"/>
+    </declare-styleable>
+</resources>

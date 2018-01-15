@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_Start1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RequestAllLine"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/btn_Start2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RequestNewsList"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/btn_Start3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CheckOfflineDataUpdate"
+            android:textAllCaps="false"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingRight="16dp">
+
+            <Button
+                android:id="@+id/btn_Start4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="DownloadOfflineData"
+                android:textAllCaps="false"/>
+
+            <ProgressBar
+                android:id="@+id/pb_Progress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                tools:progress="30"/>
+
+            <TextView
+                android:id="@+id/tv_Progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="text"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>
