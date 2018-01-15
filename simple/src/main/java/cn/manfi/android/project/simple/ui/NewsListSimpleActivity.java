@@ -21,7 +21,7 @@ public class NewsListSimpleActivity extends SwipeBackAppActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_news_list);
+        dataBinding = DataBindingUtil.setContentView(activity, R.layout.activity_news_list);
         dataBinding.setViewModel(new NewsListViewModel(this));
     }
 

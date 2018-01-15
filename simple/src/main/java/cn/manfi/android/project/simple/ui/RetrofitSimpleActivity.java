@@ -49,7 +49,7 @@ public class RetrofitSimpleActivity extends SwipeBackAppActivity implements View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_retrofit_simple);
+        binding = DataBindingUtil.setContentView(activity, R.layout.activity_retrofit_simple);
         rxPermissions = new RxPermissions(activity);
     }
 

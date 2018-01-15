@@ -31,8 +31,8 @@ public class CheckPermissionSimpleActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_check_permission);
         super.onCreate(savedInstanceState);
+        binding = DataBindingUtil.setContentView(activity, R.layout.activity_check_permission);
 
         binding.setViewModel(new CheckPermissionViewModel(activity));
         rxPermissions = new RxPermissions(activity);

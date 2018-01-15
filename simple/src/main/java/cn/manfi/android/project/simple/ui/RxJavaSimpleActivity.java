@@ -31,7 +31,7 @@ public class RxJavaSimpleActivity extends SwipeBackAppActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_rx_java_simple);
+        binding = DataBindingUtil.setContentView(activity, R.layout.activity_rx_java_simple);
     }
 
     @Override

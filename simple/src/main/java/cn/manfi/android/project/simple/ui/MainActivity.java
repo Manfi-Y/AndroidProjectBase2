@@ -19,8 +19,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         super.onCreate(savedInstanceState);
+        binding = DataBindingUtil.setContentView(activity, R.layout.activity_main);
     }
 
     @Override

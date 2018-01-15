@@ -21,7 +21,7 @@ public class MVVMSimpleActivity extends SwipeBackAppActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_mvvm_simple);
+        dataBinding = DataBindingUtil.setContentView(activity, R.layout.activity_mvvm_simple);
         dataBinding.setViewModel(new MVVMSimpleViewModel(this));
     }
 

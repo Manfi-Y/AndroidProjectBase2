@@ -18,7 +18,7 @@ public class DataBindSimpleActivity extends SwipeBackAppActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_data_bind_simple);
+        binding = DataBindingUtil.setContentView(activity, R.layout.activity_data_bind_simple);
     }
 
     @Override
