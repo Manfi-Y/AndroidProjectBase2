@@ -1,6 +1,6 @@
 package cn.manfi.android.project.simple.common.net;
 
-import cn.manfi.android.project.simple.bean.response.RGDApiResult;
+import cn.manfi.android.project.simple.model.response.RGDApiResult;
 import io.reactivex.functions.Function;
 
 /**

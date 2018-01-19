@@ -1,4 +1,4 @@
-package cn.manfi.android.project.simple.common.net;
+package cn.manfi.android.project.base.common.net;
 
 import io.reactivex.Flowable;
 import okhttp3.ResponseBody;

@@ -1,4 +1,4 @@
-package cn.manfi.android.project.simple.bean;
+package cn.manfi.android.project.simple.model;
 
 /**
  * NanNingGJJ新闻

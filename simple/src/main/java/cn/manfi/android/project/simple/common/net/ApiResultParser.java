@@ -1,6 +1,6 @@
 package cn.manfi.android.project.simple.common.net;
 
-import cn.manfi.android.project.simple.bean.response.ApiResult;
+import cn.manfi.android.project.simple.model.response.ApiResult;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 

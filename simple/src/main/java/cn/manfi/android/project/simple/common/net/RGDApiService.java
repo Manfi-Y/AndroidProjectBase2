@@ -2,8 +2,8 @@ package cn.manfi.android.project.simple.common.net;
 
 import java.util.List;
 
-import cn.manfi.android.project.simple.bean.RGDNews;
-import cn.manfi.android.project.simple.bean.response.RGDApiResult;
+import cn.manfi.android.project.simple.model.RGDNews;
+import cn.manfi.android.project.simple.model.response.RGDApiResult;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;

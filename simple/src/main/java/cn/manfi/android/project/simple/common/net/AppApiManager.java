@@ -1,60 +1,46 @@
 package cn.manfi.android.project.simple.common.net;
 
-import java.util.concurrent.TimeUnit;
-
-import cn.manfi.android.project.base.common.net.retrofit.CustomGsonConverterFactory;
+import cn.manfi.android.project.base.common.net.ApiManager;
 import cn.manfi.android.project.base.common.net.retrofit.RetrofitManager;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 /**
  * Api管理工具
  * Created by manfi on 2017/9/21.
  */
 
-public class ApiManager {
-
-    private OkHttpClient okHttpClient;
-    private Retrofit retrofit;
+public class AppApiManager extends ApiManager {
 
     private ApiService apiService;
     private Api2Service api2Service;
     private RGDApiService rgdApiService;
-    private DownloadService downloadService;
 
     private static class ApiManagerHolder {
 
-        private static final ApiManager INSTANCE = new ApiManager();
+        private static final AppApiManager INSTANCE = new AppApiManager();
     }
 
-    public static final ApiManager getInstance() {
-        return ApiManagerHolder.INSTANCE;
+    public static final AppApiManager getInstance() {
+        return AppApiManager.ApiManagerHolder.INSTANCE;
     }
 
-    private ApiManager() {
-        HttpLoggingInterceptor interceptorLog = new HttpLoggingInterceptor();
-        /*
-        不能使用BODY来输出API返回结果，不然下载进度的ResponseBody会被消费掉
-         */
-        interceptorLog.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+    private AppApiManager() {
+    }
 
-        okHttpClient = RetrofitManager.getInstance().with(new OkHttpClient.Builder()) // RetrofitManager 初始化
-                .readTimeout(5, TimeUnit.SECONDS)
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .addInterceptor(interceptorLog)
-                .build();
+    @Override
+    protected OkHttpClient createOkHttpClient() {
+        // 重写这里可以根据需求新建OkHttpClient
+        return super.createOkHttpClient();
+    }
 
-        retrofit = new Retrofit.Builder()
-                .client(okHttpClient)
-                .baseUrl("http://127.0.0.1")   // 随便填一个或空，会用拦截器动态改变url
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())  // 使用rxjava
-                .addConverterFactory(CustomGsonConverterFactory.create())   // 使用自定义Gson处理返回结果log输出
-                .build();
+    @Override
+    protected Retrofit createRetrofit() {
+        // 重写这里可以根据需求新建Retrofit
+        return super.createRetrofit();
     }
 
     public synchronized ApiService getApiService() {
@@ -111,12 +97,5 @@ public class ApiManager {
             RetrofitManager.getInstance().putDomain(RGDApiService.DOMAIN_NAME, RGDApiService.API_URL + "/");
         }
         return rgdApiService;
-    }
-
-    public synchronized DownloadService getDownloadService() {
-        if (downloadService == null) {
-            downloadService = retrofit.create(DownloadService.class);
-        }
-        return downloadService;
     }
 }

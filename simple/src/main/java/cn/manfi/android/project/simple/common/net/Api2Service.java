@@ -2,9 +2,9 @@ package cn.manfi.android.project.simple.common.net;
 
 import java.util.List;
 
-import cn.manfi.android.project.simple.bean.News;
-import cn.manfi.android.project.simple.bean.request.NewsRequest;
-import cn.manfi.android.project.simple.bean.response.Api2Result;
+import cn.manfi.android.project.simple.model.News;
+import cn.manfi.android.project.simple.model.request.NewsRequest;
+import cn.manfi.android.project.simple.model.response.Api2Result;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;

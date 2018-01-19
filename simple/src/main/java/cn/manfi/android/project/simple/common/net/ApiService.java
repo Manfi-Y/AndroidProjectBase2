@@ -2,9 +2,9 @@ package cn.manfi.android.project.simple.common.net;
 
 import java.util.List;
 
-import cn.manfi.android.project.simple.bean.LineType;
-import cn.manfi.android.project.simple.bean.OfflineDataInfo;
-import cn.manfi.android.project.simple.bean.response.ApiResult;
+import cn.manfi.android.project.simple.model.LineType;
+import cn.manfi.android.project.simple.model.OfflineDataInfo;
+import cn.manfi.android.project.simple.model.response.ApiResult;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

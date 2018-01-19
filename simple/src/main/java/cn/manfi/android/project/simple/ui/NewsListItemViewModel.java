@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.databinding.ObservableField;
 
 import cn.manfi.android.project.base.mvvm.base.BaseViewModel;
-import cn.manfi.android.project.simple.bean.RGDNews;
+import cn.manfi.android.project.simple.model.RGDNews;
 
 /**
  * 新闻列表ItemViewModel

@@ -7,27 +7,33 @@ import android.view.View;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import cn.manfi.android.project.base.common.FileUtils;
 import cn.manfi.android.project.base.common.log.LogUtil;
 import cn.manfi.android.project.base.common.net.ApiResultObserver;
 import cn.manfi.android.project.base.common.net.DownLoadSubscriber;
-import cn.manfi.android.project.base.common.net.DownLoadTransformer;
+import cn.manfi.android.project.base.common.net.UploadSubscriber;
 import cn.manfi.android.project.base.common.permission.PermissionUtils;
 import cn.manfi.android.project.simple.R;
-import cn.manfi.android.project.simple.bean.LineType;
-import cn.manfi.android.project.simple.bean.News;
-import cn.manfi.android.project.simple.bean.OfflineDataInfo;
-import cn.manfi.android.project.simple.bean.request.NewsRequest;
-import cn.manfi.android.project.simple.bean.response.Api2Result;
-import cn.manfi.android.project.simple.bean.response.ApiResult;
-import cn.manfi.android.project.simple.common.net.ApiManager;
 import cn.manfi.android.project.simple.common.net.ApiResultParser;
 import cn.manfi.android.project.simple.common.net.ApiService;
+import cn.manfi.android.project.simple.common.net.AppApiManager;
+import cn.manfi.android.project.simple.common.net.UploadService;
 import cn.manfi.android.project.simple.databinding.ActivityRetrofitSimpleBinding;
+import cn.manfi.android.project.simple.model.LineType;
+import cn.manfi.android.project.simple.model.News;
+import cn.manfi.android.project.simple.model.OfflineDataInfo;
+import cn.manfi.android.project.simple.model.UploadPhotoResult;
+import cn.manfi.android.project.simple.model.request.NewsRequest;
+import cn.manfi.android.project.simple.model.response.Api2Result;
+import cn.manfi.android.project.simple.model.response.ApiResult;
+import cn.manfi.android.project.simple.model.response.UserApiResult;
 import cn.manfi.android.project.simple.ui.base.SwipeBackAppActivity;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
@@ -59,6 +65,7 @@ public class RetrofitSimpleActivity extends SwipeBackAppActivity implements View
         binding.btnStart2.setOnClickListener(this);
         binding.btnStart3.setOnClickListener(this);
         binding.btnStart4.setOnClickListener(this);
+        binding.btnStart5.setOnClickListener(this);
     }
 
     @Override
@@ -76,11 +83,14 @@ public class RetrofitSimpleActivity extends SwipeBackAppActivity implements View
             case R.id.btn_Start4:
                 download(offlineDataInfo);
                 break;
+            case R.id.btn_Start5:
+                upload();
+                break;
         }
     }
 
     private void requestAllLine() {
-        ApiManager.getInstance().getApiService().requestAllLine("all_lines", "guangzhou")
+        AppApiManager.getInstance().getApiService().requestAllLine("all_lines", "guangzhou")
                 .delay(3, TimeUnit.SECONDS)
                 .map(new ApiResultParser<List<LineType>>() {
 
@@ -104,7 +114,7 @@ public class RetrofitSimpleActivity extends SwipeBackAppActivity implements View
     }
 
     private void requestNewsList() {
-        ApiManager.getInstance().getApi2Service().requestNewsList(new NewsRequest("0-0", 1, 20))
+        AppApiManager.getInstance().getApi2Service().requestNewsList(new NewsRequest("0-0", 1, 20))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ApiResultObserver<Api2Result<List<News>>>() {
@@ -129,7 +139,7 @@ public class RetrofitSimpleActivity extends SwipeBackAppActivity implements View
         String ime = "000000000000000";
         String phoneModel = "Google Nexus 5 - 5.1.0 - API 22 - 1080x1920";
         int appVerCode = 1400;
-        ApiManager.getInstance().getApiService().checkOfflineDataUpdate(ApiService.CHECK_OFFLINE_DATE_URL
+        AppApiManager.getInstance().getApiService().checkOfflineDataUpdate(ApiService.CHECK_OFFLINE_DATE_URL
                 , city, dbver, sid, ime, phoneModel, appVerCode)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -145,7 +155,7 @@ public class RetrofitSimpleActivity extends SwipeBackAppActivity implements View
 
     private void download(OfflineDataInfo offlineDataInfo) {
         String[] perms = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        String fileDir = FileUtils.getSDCardPath();
+        String filePath = FileUtils.getSDCardPath();
         String fileName = offlineDataInfo.getUrl().substring(offlineDataInfo.getUrl().lastIndexOf("/") + 1);
 
         DownLoadSubscriber downLoadSubscriber = new DownLoadSubscriber() {
@@ -189,19 +199,64 @@ public class RetrofitSimpleActivity extends SwipeBackAppActivity implements View
             }
         };
         rxPermissions.request(perms)
-                .toFlowable(BackpressureStrategy.ERROR)
-                .observeOn(Schedulers.io())
+                .toFlowable(BackpressureStrategy.LATEST)
                 .concatMap(granted -> {
                     if (granted) {
-                        return ApiManager.getInstance().getDownloadService().download(offlineDataInfo.getUrl());
+                        return AppApiManager.getInstance().download(offlineDataInfo.getUrl(), filePath, fileName);
                     } else if (!PermissionUtils.somePermissionsNeedAskAgain(activity, perms)) {
                         askPermanentlyDeniedPermission(PermissionUtils.hasPermissions(activity, perms));
                     }
                     return Flowable.error(new Exception("没有权限"));
                 })
-                .compose(new DownLoadTransformer(fileDir, fileName))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .safeSubscribe(downLoadSubscriber);
+    }
+
+    private void upload() {
+        UploadSubscriber<UserApiResult<UploadPhotoResult>> uploadSubscriber = new UploadSubscriber<UserApiResult<UploadPhotoResult>>() {
+
+            @Override
+            protected void onRequestUpload() {
+                LogUtil.i(DEBUG, TAG, "onRequestUpload");
+            }
+
+            @Override
+            protected void onStartUpload(long totalSize) {
+                LogUtil.i(DEBUG, TAG, "onStartUpload:" + totalSize);
+            }
+
+            @Override
+            protected void onProgress(Integer percent) {
+                LogUtil.i(DEBUG, TAG, "onProgress");
+            }
+
+            @Override
+            protected void onResult(UserApiResult<UploadPhotoResult> result) {
+                LogUtil.i(DEBUG, TAG, "onResult:" + result.getData().getInfo());
+            }
+
+            @Override
+            public void onComplete() {
+                super.onComplete();
+                LogUtil.i(DEBUG, TAG, "onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
+
+
+        };
+        File photoFile = new File(FileUtils.getSDCardPath() + "img-6393a94691b9b46aeeaf8a17f9515ad4.jpg");
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("appkey", "Yv9cL8wTwZgr");
+        paramsMap.put("ecity", "guangzhou");
+        paramsMap.put("type", 1);
+        paramsMap.put("name", "1路");
+        paramsMap.put("code", "322e21c5");
+        paramsMap.put("userid", "50456890");
+        paramsMap.put("username", "XPHFDQCP");
+        AppApiManager.getInstance().upload("https://api.8684.cn/v1/bus/img/add", UploadService.class, "upload", "imgfile", photoFile, paramsMap)
+                .safeSubscribe(uploadSubscriber);
     }
 }

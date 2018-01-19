@@ -13,9 +13,9 @@ import cn.manfi.android.project.base.mvvm.base.BaseViewModel;
 import cn.manfi.android.project.base.mvvm.command.ReplyCommand;
 import cn.manfi.android.project.simple.BR;
 import cn.manfi.android.project.simple.R;
-import cn.manfi.android.project.simple.bean.LineType;
-import cn.manfi.android.project.simple.bean.response.ApiResult;
-import cn.manfi.android.project.simple.common.net.ApiManager;
+import cn.manfi.android.project.simple.model.LineType;
+import cn.manfi.android.project.simple.model.response.ApiResult;
+import cn.manfi.android.project.simple.common.net.AppApiManager;
 import cn.manfi.android.project.simple.common.net.ApiResultParser;
 import cn.manfi.android.project.simple.ui.base.SwipeBackAppActivity;
 import io.reactivex.Notification;
@@ -50,7 +50,7 @@ public class MVVMSimpleViewModel extends BaseViewModel {
 
     private void requestAllLine() {
         System.out.println("线程1：" + Thread.currentThread().getId());
-        Observable<Notification<ApiResult<List<LineType>>>> ob = ApiManager.getInstance().getApiService().requestAllLine("all_lines", "guangzhou")
+        Observable<Notification<ApiResult<List<LineType>>>> ob = AppApiManager.getInstance().getApiService().requestAllLine("all_lines", "guangzhou")
                 .subscribeOn(Schedulers.io())
                 .compose(((SwipeBackAppActivity) activity).bindToLifecycle())
                 .materialize()

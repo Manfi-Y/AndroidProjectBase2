@@ -1,4 +1,4 @@
-package cn.manfi.android.project.simple.bean.request;
+package cn.manfi.android.project.simple.model.request;
 
 /**
  * Created by manfi on 2017/9/22.

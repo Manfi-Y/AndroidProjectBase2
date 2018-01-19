@@ -1,4 +1,4 @@
-package cn.manfi.android.project.simple.bean.response;
+package cn.manfi.android.project.simple.model.response;
 
 /**
  * Created by manfi on 2017/9/22.

@@ -16,9 +16,9 @@ import cn.manfi.android.project.base.ui.base.ListEndViewModel;
 import cn.manfi.android.project.base.ui.base.ListLoadingViewModel;
 import cn.manfi.android.project.simple.BR;
 import cn.manfi.android.project.simple.R;
-import cn.manfi.android.project.simple.bean.RGDNews;
-import cn.manfi.android.project.simple.bean.response.RGDApiResult;
-import cn.manfi.android.project.simple.common.net.ApiManager;
+import cn.manfi.android.project.simple.model.RGDNews;
+import cn.manfi.android.project.simple.model.response.RGDApiResult;
+import cn.manfi.android.project.simple.common.net.AppApiManager;
 import cn.manfi.android.project.simple.common.net.RGDApiResultParser;
 import cn.manfi.android.project.simple.ui.base.SwipeBackAppActivity;
 import io.reactivex.Observable;
@@ -95,7 +95,7 @@ public class NewsListViewModel extends BaseViewModel {
         } else {
             _pageNum = pageNum++;
         }
-        ApiManager.getInstance().getRGDApiService().requestNews(programId, _pageNum, PAGE_SIZE)
+        AppApiManager.getInstance().getRGDApiService().requestNews(programId, _pageNum, PAGE_SIZE)
                 .subscribeOn(Schedulers.io())
                 .compose(((SwipeBackAppActivity) activity).bindToLifecycle())
                 .delay(pageNum == -1 ? 1 : 0, TimeUnit.SECONDS)
