@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
+import cn.manfi.android.project.base.common.Constant;
+import cn.manfi.android.project.base.mvvm.messenger.Messenger;
+import cn.manfi.android.project.simple.App;
 import cn.manfi.android.project.simple.R;
 import cn.manfi.android.project.simple.databinding.ActivityNewsListBinding;
 import cn.manfi.android.project.simple.ui.base.SwipeBackAppActivity;
@@ -26,6 +29,18 @@ public class NewsListSimpleActivity extends SwipeBackAppActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        App.getInstance().registerNetworkMessage(activity, isNetworkConn -> dataBinding.getViewModel().showToast("网络连接：" + isNetworkConn));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        App.getInstance().unregisterNetworkMessage(activity);
+    }
+
+    @Override
     protected void initView() {
         initToolbar();
 
@@ -41,7 +56,6 @@ public class NewsListSimpleActivity extends SwipeBackAppActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
-
 
 
     @Override

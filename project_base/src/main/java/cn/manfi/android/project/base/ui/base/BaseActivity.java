@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import cn.manfi.android.project.base.BaseApp;
 import cn.manfi.android.project.base.common.permission.AppSettingsDialog;
 import cn.manfi.android.project.base.common.permission.PermissionUtils;
 import io.reactivex.Observable;
@@ -65,6 +66,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
         lifecycleSubject.onNext(ActivityEvent.CREATE);
         activity = this;
         getWindow().getDecorView().post(this::initView);
+        ((BaseApp) getApplication()).addActivity(activity);
     }
 
     @Override
@@ -99,6 +101,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
     @CallSuper
     protected void onDestroy() {
         lifecycleSubject.onNext(ActivityEvent.DESTROY);
+        ((BaseApp) getApplication()).removeActivity(activity);
         super.onDestroy();
     }
 

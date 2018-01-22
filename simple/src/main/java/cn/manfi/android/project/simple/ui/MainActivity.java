@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import cn.manfi.android.project.base.mvvm.messenger.Messenger;
 import cn.manfi.android.project.base.ui.base.BaseActivity;
 import cn.manfi.android.project.simple.R;
 import cn.manfi.android.project.simple.databinding.ActivityMainBinding;
