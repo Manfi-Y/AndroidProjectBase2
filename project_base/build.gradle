@@ -3,19 +3,17 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 
 group = 'com.github.Manfi-Y'
-version = '0.3'
 
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
     publishNonDefault true
-    defaultPublishConfig "debug"
 
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 3
-        versionName version
+        versionCode 4
+        versionName '0.4'
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -23,10 +21,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            debuggable false
-        }
-        debug {
-            debuggable true
         }
     }
     dataBinding {
