@@ -1,13 +1,11 @@
 package cn.manfi.android.project.simple;
 
-import android.app.Application;
-
 import com.facebook.drawee.backends.pipeline.Fresco;
 
 import cn.manfi.android.project.base.BaseApp;
 import cn.manfi.android.project.base.BuildConfig;
+import cn.manfi.android.project.base.common.Config;
 import cn.manfi.android.project.base.common.log.LogConfig;
-import cn.manfi.android.project.base.ui.base.BaseActivity;
 
 /**
  * Application
@@ -27,6 +25,7 @@ public class App extends BaseApp {
         super.onCreate();
         instance = this;
         LogConfig.DEBUG = BuildConfig.DEBUG;
+        Config.syncIsDebug(instance);
         Fresco.initialize(this);
     }
 }

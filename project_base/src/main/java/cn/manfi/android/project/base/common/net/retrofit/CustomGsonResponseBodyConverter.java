@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
-import cn.manfi.android.project.base.BuildConfig;
+import cn.manfi.android.project.base.common.Config;
 import cn.manfi.android.project.base.common.log.LogUtil;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
@@ -39,7 +39,7 @@ final class CustomGsonResponseBodyConverter<T> implements Converter<ResponseBody
     @Override
     public T convert(@NonNull ResponseBody value) throws IOException {
         String response = value.string();
-        LogUtil.d(BuildConfig.DEBUG, "Response", "请求响应：" + response);
+        LogUtil.d(Config.isDebug(), "Response", "请求响应：" + response);
 
         /*
         由于已经读取了ResponseBody，不能再次读取，所以上面处理输出后，将引用的ResponseBody字符串
