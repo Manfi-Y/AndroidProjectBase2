@@ -48,7 +48,7 @@ public class RxJavaSimpleActivity extends SwipeBackAppActivity {
 
     @Override
     protected void initView() {
-        binding.btnStart.setOnClickListener(v -> rxJava5());
+        binding.btnStart.setOnClickListener(v -> rxJava6());
     }
 
     private void rxJava1() {
@@ -237,5 +237,17 @@ public class RxJavaSimpleActivity extends SwipeBackAppActivity {
                         System.out.println("rxJava5 onComplete:" + Thread.currentThread().getName());
                     }
                 });
+    }
+
+    private void rxJava6() {
+        Observable.just(false)
+                .flatMap(aBoolean -> {
+                    if (aBoolean) {
+                        return Observable.just(1);
+                    } else {
+                        return Observable.just(2);
+                    }
+                })
+                .subscribe(System.out::println);
     }
 }
