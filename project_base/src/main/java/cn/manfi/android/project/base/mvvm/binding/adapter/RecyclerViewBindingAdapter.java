@@ -31,8 +31,7 @@ public final class RecyclerViewBindingAdapter {
         OnScrollListener(final ReplyCommand<Integer> onLoadMoreCommand) {
             this.onLoadMoreCommand = onLoadMoreCommand;
             // 只执行最近1秒内的第一个滚动回调
-            methodInvoke.throttleFirst(1, TimeUnit.SECONDS)
-                    .subscribe(onLoadMoreCommand::execute);
+            methodInvoke.throttleFirst(1, TimeUnit.SECONDS).subscribe(onLoadMoreCommand::execute);
         }
 
         @Override
