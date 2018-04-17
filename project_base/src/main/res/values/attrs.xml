@@ -39,8 +39,14 @@
         <attr name="onFailureCommand" format="reference"/>
     </declare-styleable>
 
+    <!-- Fresco -->
     <declare-styleable name="SimpleDraweeView">
-        <!-- Fresco -->
         <attr name="imgUri"/>
+    </declare-styleable>
+
+    <!-- DragLinearLayout -->
+    <declare-styleable name="DragLinearLayout">
+        <attr name="scrollSensitiveHeight" format="dimension"/>
+        <attr name="placeholderView" format="reference"/>
     </declare-styleable>
 </resources>

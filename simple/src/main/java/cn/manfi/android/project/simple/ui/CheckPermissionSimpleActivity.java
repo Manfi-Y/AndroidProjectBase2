@@ -15,8 +15,6 @@ import cn.manfi.android.project.base.common.permission.PermissionUtils;
 import cn.manfi.android.project.base.ui.base.BaseActivity;
 import cn.manfi.android.project.simple.R;
 import cn.manfi.android.project.simple.databinding.ActivityCheckPermissionBinding;
-import io.reactivex.ObservableSource;
-import io.reactivex.functions.Function;
 
 /**
  * Check Permission Simple Activity

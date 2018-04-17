@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import cn.manfi.android.project.base.mvvm.messenger.Messenger;
 import cn.manfi.android.project.base.ui.base.BaseActivity;
 import cn.manfi.android.project.simple.R;
 import cn.manfi.android.project.simple.databinding.ActivityMainBinding;
@@ -55,6 +54,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.layout_ViewPagerSimple:
                 startActivity(new Intent(activity, ViewPagerSimpleActivity.class));
+                break;
+            case R.id.layout_DragLayoutSimple:
+                startActivity(new Intent(activity, DragLayoutSimpleActivity.class));
                 break;
         }
     }

@@ -46,6 +46,10 @@
         <activity
             android:name=".ui.ViewPagerSimpleActivity"
             android:theme="@style/AppTheme"/>
+
+        <activity
+            android:name=".ui.DragLayoutSimpleActivity"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

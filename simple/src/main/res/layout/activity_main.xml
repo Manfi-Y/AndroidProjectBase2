@@ -25,8 +25,8 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
+                android:layout_height="?android:attr/actionBarSize"
+                android:background="@color/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
         </android.support.design.widget.AppBarLayout>
@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/background_light"
-                android:divider="?attr/dividerVertical"
+                android:divider="?android:attr/dividerVertical"
                 android:orientation="vertical"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
@@ -52,7 +52,7 @@
                     android:id="@+id/layout_DataBindingSimple"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="?android:attr/selectableItemBackground"
                     android:onClick="@{click}"
                     android:orientation="vertical"
                     android:paddingBottom="8dp"
@@ -77,7 +77,7 @@
                     android:id="@+id/layout_RxJavaSimple"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="?android:attr/selectableItemBackground"
                     android:onClick="@{click}"
                     android:orientation="vertical"
                     android:paddingBottom="8dp"
@@ -102,7 +102,7 @@
                     android:id="@+id/layout_RetrofitSimple"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="?android:attr/selectableItemBackground"
                     android:onClick="@{click}"
                     android:orientation="vertical"
                     android:paddingBottom="8dp"
@@ -127,7 +127,7 @@
                     android:id="@+id/layout_MVVMSimple"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="?android:attr/selectableItemBackground"
                     android:onClick="@{click}"
                     android:orientation="vertical"
                     android:paddingBottom="8dp"
@@ -152,7 +152,7 @@
                     android:id="@+id/layout_RGDNewsListSimple"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="?android:attr/selectableItemBackground"
                     android:onClick="@{click}"
                     android:orientation="vertical"
                     android:paddingBottom="8dp"
@@ -177,7 +177,7 @@
                     android:id="@+id/layout_CheckPermissionSimple"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="?android:attr/selectableItemBackground"
                     android:onClick="@{click}"
                     android:orientation="vertical"
                     android:paddingBottom="8dp"
@@ -202,7 +202,7 @@
                     android:id="@+id/layout_ViewPagerSimple"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="?android:attr/selectableItemBackground"
                     android:onClick="@{click}"
                     android:orientation="vertical"
                     android:paddingBottom="8dp"
@@ -214,6 +214,31 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="View Pager Simple"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_DragLayoutSimple"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="@{click}"
+                    android:orientation="vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DragLinearLayout Simnple"
                         android:textSize="16sp"/>
 
                     <TextView
