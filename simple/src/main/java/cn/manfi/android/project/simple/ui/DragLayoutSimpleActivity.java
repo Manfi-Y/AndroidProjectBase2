@@ -3,7 +3,6 @@ package cn.manfi.android.project.simple.ui;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.view.View;
-import android.widget.ScrollView;
 
 import cn.manfi.android.project.base.common.view.DragLinearLayout;
 import cn.manfi.android.project.base.ui.base.BaseActivity;

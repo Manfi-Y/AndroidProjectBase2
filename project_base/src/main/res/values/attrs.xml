@@ -14,7 +14,7 @@
 
     <declare-styleable name="AdapterView">
         <!-- require ReplyCommand<Integer> count of list items-->
-        <attr name="onLoadMoreCommadn"/>
+        <attr name="onLoadMoreCommand"/>
     </declare-styleable>
 
     <declare-styleable name="RecyclerView" parent="AdapterView">

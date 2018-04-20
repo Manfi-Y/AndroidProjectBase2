@@ -5,7 +5,7 @@ import android.support.design.widget.TextInputLayout;
 
 public final class TextInputLayoutBindingAdapter {
 
-    @BindingAdapter("app:errorText")
+    @BindingAdapter("errorText")
     public static void setErrorMessage(TextInputLayout view, String errorMessage) {
         view.setError(errorMessage);
     }
