@@ -1,4 +1,4 @@
-package cn.manfi.android.project.simple.common;
+package cn.manfi.android.project.base.common;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
