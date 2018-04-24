@@ -61,6 +61,6 @@ dependencies {
         坑1：MergeObservableList中如果insert了一个空的List，调用removeAll也不会去掉这个list，因为removeAll方法里面是
         计算MergeObservableList中每个List的size加起来是否大于0才会去清除。
          */
-    api 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:2.3.0-beta1'
-    api 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.3.0-beta1'
+    api 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:2.2.0'
+    api 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.2.0'
 }
