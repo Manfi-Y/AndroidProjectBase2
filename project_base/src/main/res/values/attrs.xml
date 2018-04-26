@@ -49,4 +49,13 @@
         <attr name="scrollSensitiveHeight" format="dimension"/>
         <attr name="placeholderView" format="reference"/>
     </declare-styleable>
+
+    <!-- RoundedFrameLayout -->
+    <declare-styleable name="RoundedFrameLayout">
+        <attr name="radius" format="dimension" />
+        <attr name="topLeftRadius" format="dimension" />
+        <attr name="topRightRadius" format="dimension" />
+        <attr name="bottomLeftRadius" format="dimension" />
+        <attr name="bottomRightRadius" format="dimension" />
+    </declare-styleable>
 </resources>
