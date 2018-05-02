@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import cn.manfi.android.project.base.common.RxDisposedManager;
 import cn.manfi.android.project.base.common.log.LogUtil;
 import cn.manfi.android.project.simple.R;
 import cn.manfi.android.project.simple.databinding.ActivityRxJavaSimpleBinding;
@@ -44,11 +45,12 @@ public class RxJavaSimpleActivity extends SwipeBackAppActivity {
     protected void onDestroy() {
         super.onDestroy();
         System.out.println("RxJavaSimpleActivity.onDestroy");
+        RxDisposedManager.dispose(activity);
     }
 
     @Override
     protected void initView() {
-        binding.btnStart.setOnClickListener(v -> rxJava6());
+        binding.btnStart.setOnClickListener(v -> rxJava7());
     }
 
     private void rxJava1() {
@@ -249,5 +251,32 @@ public class RxJavaSimpleActivity extends SwipeBackAppActivity {
                     }
                 })
                 .subscribe(System.out::println);
+    }
+
+    private void rxJava7() {
+        Observable.interval(1, TimeUnit.SECONDS)
+                .subscribe(new Observer<Long>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        RxDisposedManager.addDisposed(activity, d);
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        System.out.println("RxJavaSimpleActivity:rxJava7 onNext:" + aLong);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        System.out.println("RxJavaSimpleActivity:rxJava7 onComplete");
+                    }
+                });
+
     }
 }
