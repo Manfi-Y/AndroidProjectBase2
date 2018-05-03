@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.CheckResult;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;
@@ -36,7 +38,38 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
 
     protected Activity activity;
 
+    private Toast toast;
+    private MaterialDialog loadingDialog;
+
     private final BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
+
+    public void showToast(String msg) {
+        showToast(msg, Toast.LENGTH_SHORT);
+    }
+
+    public void showToast(String msg, int duration) {
+        if (toast != null) {
+            toast.cancel();
+        }
+        toast = Toast.makeText(activity, msg, duration);
+        toast.show();
+    }
+
+    public void showLoading(@android.support.annotation.Nullable String msg) {
+        if (loadingDialog == null) {
+            loadingDialog = new MaterialDialog.Builder(activity)
+                    .progress(true, 0)
+                    .content(msg)
+                    .build();
+        }
+        loadingDialog.show();
+    }
+
+    public void dismissLoading() {
+        if (loadingDialog != null) {
+            loadingDialog.dismiss();
+        }
+    }
 
     @Override
     @NonNull
