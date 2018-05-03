@@ -11,12 +11,13 @@ import java.util.concurrent.TimeUnit;
 import cn.manfi.android.project.base.common.net.ApiResultObserver;
 import cn.manfi.android.project.base.mvvm.base.BaseViewModel;
 import cn.manfi.android.project.base.mvvm.command.ReplyCommand;
+import cn.manfi.android.project.base.ui.base.BaseActivity;
 import cn.manfi.android.project.simple.BR;
 import cn.manfi.android.project.simple.R;
+import cn.manfi.android.project.simple.common.net.ApiResultParser;
+import cn.manfi.android.project.simple.common.net.AppApiManager;
 import cn.manfi.android.project.simple.model.LineType;
 import cn.manfi.android.project.simple.model.response.ApiResult;
-import cn.manfi.android.project.simple.common.net.AppApiManager;
-import cn.manfi.android.project.simple.common.net.ApiResultParser;
 import cn.manfi.android.project.simple.ui.base.SwipeBackAppActivity;
 import io.reactivex.Notification;
 import io.reactivex.Observable;
@@ -41,7 +42,7 @@ public class MVVMSimpleViewModel extends BaseViewModel {
     public final ReplyCommand<Void> requestAllLineCmd = new ReplyCommand<>(this::requestAllLine);
 
     public final ReplyCommand<Integer> onLoadMoreCommand = new ReplyCommand<>(integer -> {
-        showToast("onLoadMoreCommand");
+        ((BaseActivity) activity).showToast("onLoadMoreCommand");
     });
 
     public MVVMSimpleViewModel(Activity activity) {
@@ -66,7 +67,7 @@ public class MVVMSimpleViewModel extends BaseViewModel {
                     @Override
                     protected void processApiResult(ApiResult<List<LineType>> apiResult) {  // 处理ApiResult结果，如果业务代码不成功则进行处理
                         super.processApiResult(apiResult);
-                        showToast(apiResult.getError_message());
+                        ((BaseActivity) activity).showToast(apiResult.getError_message());
                     }
                 })
                 .doOnNext(
@@ -85,7 +86,7 @@ public class MVVMSimpleViewModel extends BaseViewModel {
                     public void onSubscribe(Disposable d) {
                         super.onSubscribe(d);
                         if (!d.isDisposed()) {
-                            showLoading("正在加载");
+                            ((BaseActivity) activity).showLoading("正在加载");
                         }
                     }
 
@@ -98,7 +99,7 @@ public class MVVMSimpleViewModel extends BaseViewModel {
                     @Override
                     public void onComplete() {
                         super.onComplete();
-                        dismissLoading();
+                        ((BaseActivity) activity).dismissLoading();
                     }
                 });
     }

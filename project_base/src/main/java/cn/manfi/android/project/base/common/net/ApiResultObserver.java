@@ -8,6 +8,7 @@ import java.util.concurrent.TimeoutException;
 import cn.manfi.android.project.base.common.NetworkUtil;
 import cn.manfi.android.project.base.common.log.LogUtil;
 import cn.manfi.android.project.base.mvvm.base.BaseViewModel;
+import cn.manfi.android.project.base.ui.base.BaseActivity;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -65,20 +66,20 @@ public abstract class ApiResultObserver<T> implements Observer<T> {
                 || e instanceof SocketTimeoutException) {
             // 网络连接错误
             LogUtil.w(DEBUG, TAG, "网络连接异常");
-            if (viewModel != null) {
-                viewModel.showToast("网络连接异常");
+            if (viewModel != null && viewModel.getActivity() instanceof BaseActivity) {
+                ((BaseActivity) viewModel.getActivity()).showToast("网络连接异常");
             }
         } else if (e instanceof HttpException) {
             // 404等错误
             LogUtil.w(DEBUG, TAG, "服务器开小差");
-            if (viewModel != null) {
-                viewModel.showToast("服务器开小差");
+            if (viewModel != null && viewModel.getActivity() instanceof BaseActivity) {
+                ((BaseActivity) viewModel.getActivity()).showToast("服务器开小差");
             }
         } else if (e instanceof IOException) {
             // Json数据解析错误
             LogUtil.w(DEBUG, TAG, "Json数据解析错误");
-            if (viewModel != null) {
-                viewModel.showToast("Json数据解析错误");
+            if (viewModel != null && viewModel.getActivity() instanceof BaseActivity) {
+                ((BaseActivity) viewModel.getActivity()).showToast("Json数据解析错误");
             }
         }
         e.printStackTrace();

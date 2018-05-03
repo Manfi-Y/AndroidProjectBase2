@@ -11,6 +11,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.concurrent.TimeUnit;
 
+import cn.manfi.android.project.base.common.RxDisposedManager;
 import cn.manfi.android.project.base.common.permission.PermissionUtils;
 import cn.manfi.android.project.base.ui.base.BaseActivity;
 import cn.manfi.android.project.simple.R;
@@ -37,19 +38,25 @@ public class CheckPermissionSimpleActivity extends BaseActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxDisposedManager.dispose(activity);
+    }
+
+    @Override
     protected void initView() {
         initToolbar();
         String[] perms = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE};
-        RxView.clicks(binding.btnCheck).throttleFirst(1, TimeUnit.SECONDS)
+        RxDisposedManager.addDisposed(activity, RxView.clicks(binding.btnCheck).throttleFirst(1, TimeUnit.SECONDS)
                 .concatMap(o -> rxPermissions.request(perms))
                 .subscribe(granted -> {
                     System.out.println("CheckPermissionSimpleActivity.subscribe");
                     if (granted) {
-                        binding.getViewModel().showToast("所有权限允许");
+                        showToast("所有权限允许");
                     } else if (!PermissionUtils.somePermissionsNeedAskAgain(activity, perms)) {
                         askPermanentlyDeniedPermission(PermissionUtils.hasPermissions(activity, perms));
                     }
-                });
+                }));
     }
 
     void initToolbar() {
