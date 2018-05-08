@@ -1,10 +1,13 @@
 package cn.manfi.android.project.base.ui.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.CheckResult;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -55,6 +58,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
         toast.show();
     }
 
+    /**
+     * 显示Loading
+     * @param msg Loading title
+     */
     public void showLoading(@android.support.annotation.Nullable String msg) {
         if (loadingDialog == null) {
             loadingDialog = new MaterialDialog.Builder(activity)
@@ -65,9 +72,36 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
         loadingDialog.show();
     }
 
+
+    /**
+     * 取消Loading对话框
+     */
     public void dismissLoading() {
         if (loadingDialog != null) {
             loadingDialog.dismiss();
+        }
+    }
+
+    /**
+     * 隐藏键盘
+     */
+    public void hideSoftKeyboard() {
+        if (activity.getCurrentFocus() == null || activity.getCurrentFocus().getWindowToken() == null)
+            return;
+
+        ((InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    /**
+     * 隐藏键盘
+     *
+     * @param view ~
+     */
+    public void hideSoftKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (view != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 
