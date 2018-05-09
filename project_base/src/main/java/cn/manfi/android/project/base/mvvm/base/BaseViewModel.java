@@ -81,21 +81,6 @@ public class BaseViewModel implements ViewModel {
 
     /**
      * 隐藏键盘
-     */
-    public void hideSoftKeyboard() {
-        if (activity instanceof BaseActivity) {
-            ((BaseActivity) activity).hideSoftKeyboard();
-            return;
-        }
-        if (activity.getCurrentFocus() == null || activity.getCurrentFocus().getWindowToken() == null)
-            return;
-
-        ((InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(),
-                InputMethodManager.HIDE_NOT_ALWAYS);
-    }
-
-    /**
-     * 隐藏键盘
      *
      * @param view ~
      */
@@ -105,8 +90,8 @@ public class BaseViewModel implements ViewModel {
             return;
         }
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (view != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        if (view != null && imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 }

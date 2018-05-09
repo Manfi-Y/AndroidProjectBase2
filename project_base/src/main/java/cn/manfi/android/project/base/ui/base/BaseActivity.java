@@ -5,9 +5,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.CheckResult;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -25,8 +29,6 @@ import cn.manfi.android.project.base.BaseApp;
 import cn.manfi.android.project.base.common.permission.AppSettingsDialog;
 import cn.manfi.android.project.base.common.permission.PermissionUtils;
 import io.reactivex.Observable;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.annotations.Nullable;
 import io.reactivex.subjects.BehaviorSubject;
 
 /**
@@ -46,6 +48,20 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
 
     private final BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        // 处理触摸EditText外部收起键盘
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            // 获得当前得到焦点的View，一般情况下就是EditText（特殊情况就是轨迹求或者实体按键会移动焦点）
+            View v = getCurrentFocus();
+            if (isShouldHideInput(v, ev)) {
+                v.clearFocus();
+                hideSoftKeyboard(v);
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
     public void showToast(String msg) {
         showToast(msg, Toast.LENGTH_SHORT);
     }
@@ -60,9 +76,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
 
     /**
      * 显示Loading
+     *
      * @param msg Loading title
      */
-    public void showLoading(@android.support.annotation.Nullable String msg) {
+    public void showLoading(@NonNull String msg) {
         if (loadingDialog == null) {
             loadingDialog = new MaterialDialog.Builder(activity)
                     .progress(true, 0)
@@ -71,7 +88,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
         }
         loadingDialog.show();
     }
-
 
     /**
      * 取消Loading对话框
@@ -83,25 +99,34 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
     }
 
     /**
-     * 隐藏键盘
+     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时没必要隐藏
+     *
+     * @param v     EditText
+     * @param event ~
+     *
+     * @return ~
      */
-    public void hideSoftKeyboard() {
-        if (activity.getCurrentFocus() == null || activity.getCurrentFocus().getWindowToken() == null)
-            return;
-
-        ((InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(),
-                InputMethodManager.HIDE_NOT_ALWAYS);
+    private boolean isShouldHideInput(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] l = {0, 0};
+            v.getLocationInWindow(l);
+            int left = l[0], top = l[1], bottom = top + v.getHeight(), right = left + v.getWidth();
+            // 如果点击是EditText的时间， 忽略掉
+            return !(event.getX() > left) || !(event.getX() < right) || !(event.getY() > top) || !(event.getY() < bottom);
+        }
+        // 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditView上，和用户用轨迹球选择其他的焦点
+        return false;
     }
 
     /**
      * 隐藏键盘
      *
-     * @param view ~
+     * @param view 通常是EditText
      */
     public void hideSoftKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (view != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        if (view != null && imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 
