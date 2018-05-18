@@ -55,7 +55,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
             // 获得当前得到焦点的View，一般情况下就是EditText（特殊情况就是轨迹求或者实体按键会移动焦点）
             View v = getCurrentFocus();
             if (isShouldHideInput(v, ev)) {
-                v.clearFocus();
                 hideSoftKeyboard(v);
             }
         }

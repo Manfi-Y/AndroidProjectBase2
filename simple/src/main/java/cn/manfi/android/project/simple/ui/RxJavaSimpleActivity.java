@@ -13,6 +13,7 @@ import cn.manfi.android.project.base.common.log.LogUtil;
 import cn.manfi.android.project.simple.R;
 import cn.manfi.android.project.simple.databinding.ActivityRxJavaSimpleBinding;
 import cn.manfi.android.project.simple.ui.base.SwipeBackAppActivity;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -277,6 +278,9 @@ public class RxJavaSimpleActivity extends SwipeBackAppActivity {
                         System.out.println("RxJavaSimpleActivity:rxJava7 onComplete");
                     }
                 });
+    }
+
+    private void rxJava8() {
 
     }
 }
