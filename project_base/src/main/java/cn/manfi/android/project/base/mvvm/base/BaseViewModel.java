@@ -16,14 +16,14 @@ import cn.manfi.android.project.base.ui.base.BaseActivity;
  * Created by manfi on 2017/10/25.
  */
 
-public class BaseViewModel implements ViewModel {
+public class BaseViewModel<T extends Activity> implements ViewModel {
 
-    protected Activity activity;
+    protected T activity;
 
     private Toast toast;
     private MaterialDialog loadingDialog;
 
-    public BaseViewModel(Activity activity) {
+    public BaseViewModel(T activity) {
         this.activity = activity;
     }
 

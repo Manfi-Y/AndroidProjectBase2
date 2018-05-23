@@ -13,7 +13,6 @@ import cn.manfi.android.project.base.common.log.LogUtil;
 import cn.manfi.android.project.simple.R;
 import cn.manfi.android.project.simple.databinding.ActivityRxJavaSimpleBinding;
 import cn.manfi.android.project.simple.ui.base.SwipeBackAppActivity;
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -51,7 +50,7 @@ public class RxJavaSimpleActivity extends SwipeBackAppActivity {
 
     @Override
     protected void initView() {
-        binding.btnStart.setOnClickListener(v -> rxJava7());
+        binding.btnStart.setOnClickListener(v -> rxJava8());
     }
 
     private void rxJava1() {
@@ -281,6 +280,42 @@ public class RxJavaSimpleActivity extends SwipeBackAppActivity {
     }
 
     private void rxJava8() {
+        Observable<Integer> ob1 = Observable.create(emitter -> {
+            emitter.onNext(1);
+            emitter.onComplete();
+        });
 
+        Observable<Integer> ob2 = Observable.create(emitter -> {
+            Thread.sleep(3000);
+            emitter.onNext(2);
+            emitter.onComplete();
+        });
+
+        Observable.zip(ob1, ob2, (integer, integer2) -> integer + integer2)
+                .timeout(4, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Integer>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        System.out.println("RxJava8 onSubscribe");
+                    }
+
+                    @Override
+                    public void onNext(Integer o) {
+                        System.out.println("RxJava8 onNext");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println("RxJava8 onError");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        System.out.println("RxJava8 onComplete");
+                    }
+                });
     }
 }
