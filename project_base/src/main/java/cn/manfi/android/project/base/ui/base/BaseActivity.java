@@ -1,7 +1,7 @@
 package cn.manfi.android.project.base.ui.base;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.CheckResult;
@@ -10,11 +10,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;
@@ -43,8 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
 
     protected Activity activity;
 
-    private Toast toast;
-    private MaterialDialog loadingDialog;
+    private BaseUI baseUI;
 
     private final BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
 
@@ -61,95 +58,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
         return super.dispatchTouchEvent(ev);
     }
 
-    public void showToast(String msg) {
-        showToast(msg, Toast.LENGTH_SHORT);
-    }
-
-    public void showToast(String msg, int duration) {
-        if (toast != null) {
-            toast.cancel();
-        }
-        toast = Toast.makeText(activity, msg, duration);
-        toast.show();
-    }
-
-    /**
-     * 显示Loading
-     *
-     * @param msg Loading title
-     */
-    public void showLoading(@NonNull String msg) {
-        if (loadingDialog == null) {
-            loadingDialog = new MaterialDialog.Builder(activity)
-                    .progress(true, 0)
-                    .content(msg)
-                    .build();
-        }
-        loadingDialog.show();
-    }
-
-    /**
-     * 取消Loading对话框
-     */
-    public void dismissLoading() {
-        if (loadingDialog != null) {
-            loadingDialog.dismiss();
-        }
-    }
-
-    /**
-     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时没必要隐藏
-     *
-     * @param v     EditText
-     * @param event ~
-     *
-     * @return ~
-     */
-    private boolean isShouldHideInput(View v, MotionEvent event) {
-        if (v != null && (v instanceof EditText)) {
-            int[] l = {0, 0};
-            v.getLocationInWindow(l);
-            int left = l[0], top = l[1], bottom = top + v.getHeight(), right = left + v.getWidth();
-            // 如果点击是EditText的时间， 忽略掉
-            return !(event.getX() > left) || !(event.getX() < right) || !(event.getY() > top) || !(event.getY() < bottom);
-        }
-        // 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditView上，和用户用轨迹球选择其他的焦点
-        return false;
-    }
-
-    /**
-     * 隐藏键盘
-     *
-     * @param view 通常是EditText
-     */
-    public void hideSoftKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (view != null && imm != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
-    }
-
-    @Override
-    @NonNull
-    @CheckResult
-    public final Observable<ActivityEvent> lifecycle() {
-        return lifecycleSubject.hide();
-    }
-
-    @Override
-    @NonNull
-    @CheckResult
-    public final <T> LifecycleTransformer<T> bindUntilEvent(@NonNull ActivityEvent event) {
-        return RxLifecycle.bindUntilEvent(lifecycleSubject, event);
-    }
-
-    @Override
-    @NonNull
-    @CheckResult
-    public final <T> LifecycleTransformer<T> bindToLifecycle() {
-        return RxLifecycleAndroid.bindActivity(lifecycleSubject);
-    }
-
     @Override
     @CallSuper
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -158,6 +66,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
         activity = this;
         getWindow().getDecorView().post(this::initView);
         ((BaseApp) getApplication()).addActivity(activity);
+        setBaseUI();
     }
 
     @Override
@@ -196,6 +105,91 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
         super.onDestroy();
     }
 
+    @Override
+    @NonNull
+    @CheckResult
+    public final Observable<ActivityEvent> lifecycle() {
+        return lifecycleSubject.hide();
+    }
+
+    @Override
+    @NonNull
+    @CheckResult
+    public final <T> LifecycleTransformer<T> bindUntilEvent(@NonNull ActivityEvent event) {
+        return RxLifecycle.bindUntilEvent(lifecycleSubject, event);
+    }
+
+    @Override
+    @NonNull
+    @CheckResult
+    public final <T> LifecycleTransformer<T> bindToLifecycle() {
+        return RxLifecycleAndroid.bindActivity(lifecycleSubject);
+    }
+
+    /**
+     * 可自行重写BaseUI
+     */
+    protected void setBaseUI() {
+        baseUI = new BaseUI(activity);
+    }
+
+    public void showToast(String msg) {
+        showToast(msg, Toast.LENGTH_SHORT);
+    }
+
+    public void showToast(String msg, int duration) {
+        baseUI.showToast(msg, duration);
+    }
+
+    public void showLoading(@NonNull String msg) {
+        showLoading(msg, false, null);
+    }
+
+    /**
+     * 显示Loading
+     *
+     * @param msg Loading title
+     */
+    public void showLoading(@NonNull String msg, boolean cancelable, @Nullable DialogInterface.OnCancelListener cancelListener) {
+        baseUI.showLoading(msg, cancelable, cancelListener);
+    }
+
+    /**
+     * 取消Loading对话框
+     */
+    public void dismissLoading() {
+        baseUI.dismissLoading();
+    }
+
+    /**
+     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时没必要隐藏
+     *
+     * @param v     EditText
+     * @param event ~
+     *
+     * @return ~
+     */
+    private boolean isShouldHideInput(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] l = {0, 0};
+            v.getLocationInWindow(l);
+            int left = l[0], top = l[1], bottom = top + v.getHeight(), right = left + v.getWidth();
+            // 如果点击是EditText的时间， 忽略掉
+            return !(event.getX() > left) || !(event.getX() < right) || !(event.getY() > top) || !(event.getY() < bottom);
+        }
+        // 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditView上，和用户用轨迹球选择其他的焦点
+        return false;
+    }
+
+    /**
+     * 隐藏键盘
+     *
+     * @param view 通常是EditText
+     */
+    public void hideSoftKeyboard(View view) {
+        baseUI.hideSoftKeyboard(view);
+    }
+
     protected abstract void initView();
 
     /**
@@ -231,5 +225,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
      */
     protected void permanentlyDeniedPermissionDenied(List<String> permanentlyDeniedPerms) {
 
+    }
+
+    public BaseUI getBaseUI() {
+        return baseUI;
     }
 }

@@ -1,15 +1,14 @@
 package cn.manfi.android.project.base.mvvm.base;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.DialogInterface;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-
 import cn.manfi.android.project.base.ui.base.BaseActivity;
+import cn.manfi.android.project.base.ui.base.BaseUI;
 
 /**
  * 基础ViewModel
@@ -18,17 +17,31 @@ import cn.manfi.android.project.base.ui.base.BaseActivity;
 
 public class BaseViewModel<T extends Activity> implements ViewModel {
 
+    protected final String TAG = getClass().getSimpleName();
+    protected final boolean DEBUG = true;
+
     protected T activity;
 
-    private Toast toast;
-    private MaterialDialog loadingDialog;
+    private BaseUI baseUI;
 
     public BaseViewModel(T activity) {
         this.activity = activity;
+        setBaseUI();
     }
 
     public Activity getActivity() {
         return activity;
+    }
+
+    /**
+     * 可自行重写BaseUI
+     */
+    protected void setBaseUI() {
+        if (activity instanceof BaseActivity) {
+            baseUI = ((BaseActivity) activity).getBaseUI();
+        } else {
+            baseUI = new BaseUI(activity);
+        }
     }
 
     public void showToast(String msg) {
@@ -36,15 +49,11 @@ public class BaseViewModel<T extends Activity> implements ViewModel {
     }
 
     public void showToast(String msg, int duration) {
-        if (activity instanceof BaseActivity) {
-            ((BaseActivity) activity).showToast(msg, duration);
-            return;
-        }
-        if (toast != null) {
-            toast.cancel();
-        }
-        toast = Toast.makeText(activity, msg, duration);
-        toast.show();
+        baseUI.showToast(msg, duration);
+    }
+
+    public void showLoading(@NonNull String msg) {
+        showLoading(msg, false, null);
     }
 
     /**
@@ -52,46 +61,23 @@ public class BaseViewModel<T extends Activity> implements ViewModel {
      *
      * @param msg Loading title
      */
-    public void showLoading(@Nullable String msg) {
-        if (activity instanceof BaseActivity) {
-            ((BaseActivity) activity).showLoading(msg);
-            return;
-        }
-        if (loadingDialog == null) {
-            loadingDialog = new MaterialDialog.Builder(activity)
-                    .progress(true, 0)
-                    .content(msg)
-                    .build();
-        }
-        loadingDialog.show();
+    public void showLoading(@NonNull String msg, boolean cancelable, @Nullable DialogInterface.OnCancelListener cancelListener) {
+        baseUI.showLoading(msg, cancelable, cancelListener);
     }
 
     /**
      * 取消Loading对话框
      */
     public void dismissLoading() {
-        if (activity instanceof BaseActivity) {
-            ((BaseActivity) activity).dismissLoading();
-            return;
-        }
-        if (loadingDialog != null) {
-            loadingDialog.dismiss();
-        }
+        baseUI.dismissLoading();
     }
 
     /**
      * 隐藏键盘
      *
-     * @param view ~
+     * @param view 通常是EditText
      */
     public void hideSoftKeyboard(View view) {
-        if (activity instanceof BaseActivity) {
-            ((BaseActivity) activity).hideSoftKeyboard(view);
-            return;
-        }
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (view != null && imm != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
+        baseUI.hideSoftKeyboard(view);
     }
 }

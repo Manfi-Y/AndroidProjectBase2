@@ -24,7 +24,7 @@ public class ViewPagerSimpleActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataBinding = DataBindingUtil.setContentView(activity, R.layout.activity_viewpager_simple);
-        dataBinding.setViewModel(new ViewPagerSimpleViewModel(activity));
+        dataBinding.setViewModel(new ViewPagerSimpleViewModel((ViewPagerSimpleActivity) activity));
     }
 
     @Override

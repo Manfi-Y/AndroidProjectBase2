@@ -34,7 +34,7 @@ import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass;
  * Created by manfi on 2017/12/22.
  */
 
-public class NewsListViewModel extends BaseViewModel {
+public class NewsListViewModel extends BaseViewModel<NewsListSimpleActivity> {
 
     private static final int PAGE_SIZE = 20;
 
@@ -73,7 +73,7 @@ public class NewsListViewModel extends BaseViewModel {
         }
     });
 
-    public NewsListViewModel(Activity activity) {
+    public NewsListViewModel(NewsListSimpleActivity activity) {
         super(activity);
         listLoadingViewModel = new ListLoadingViewModel(activity);
         listEndViewModel = new ListEndViewModel(activity);
