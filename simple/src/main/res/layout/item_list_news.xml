@@ -67,7 +67,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text='@{FormatUtils.formatTime(itemViewModel.news.get().getNewstime()*1000, "yyyy-MM-dd")}'
-                        android:textColor="@color/text_second"
+                        android:textColor="@color/text_second_dark"
                         android:textSize="10sp"
                         tools:text="4 hours ago"/>
 
@@ -76,7 +76,7 @@
                         android:layout_height="14dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
-                        android:background="@drawable/dividier_horizontal"/>
+                        android:background="@drawable/dividier_horizontal_drak"/>
 
                     <TextView
                         android:id="@+id/tv_Promulgator"

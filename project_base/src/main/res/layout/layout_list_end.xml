@@ -23,9 +23,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:text="@{viewModel.endText}"
-            android:textColor="@color/text_second"
+            android:textColor="@color/text_second_dark"
             android:textSize="12sp"
             android:visibility="@{TextUtils.isEmpty(viewModel.endText) ? View.GONE : View.VISIBLE}"
             tools:text="正在加载更多"/>
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_toLeftOf="@id/tv_Loading"
+            android:layout_toStartOf="@id/tv_Loading"
             android:visibility="@{viewModel.isProgressVisable ? View.VISIBLE : View.GONE}"/>
     </RelativeLayout>
 </layout>
