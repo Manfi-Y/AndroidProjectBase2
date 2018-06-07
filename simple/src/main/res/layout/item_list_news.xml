@@ -51,7 +51,6 @@
                     android:ellipsize="end"
                     android:lines="2"
                     android:text="@{itemViewModel.news.get().getTitle()}"
-                    android:textColor="@color/text"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     tools:text="'Bit Mac' projects commence 'Bit Mac' projects commence 'Bit Mac' projects commence 'Bit Mac' projects commence"/>

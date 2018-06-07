@@ -15,8 +15,6 @@
         android:orientation="vertical">
 
         <com.ogaclejapan.smarttablayout.SmartTabLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/stl"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"

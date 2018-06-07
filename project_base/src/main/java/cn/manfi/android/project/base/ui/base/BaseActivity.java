@@ -64,7 +64,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
         super.onCreate(savedInstanceState);
         lifecycleSubject.onNext(ActivityEvent.CREATE);
         activity = this;
-        getWindow().getDecorView().post(this::initView);
         ((BaseApp) getApplication()).addActivity(activity);
         setBaseUI();
     }
@@ -74,6 +73,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
     protected void onStart() {
         super.onStart();
         lifecycleSubject.onNext(ActivityEvent.START);
+        initView();
     }
 
     @Override

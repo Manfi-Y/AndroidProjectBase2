@@ -26,6 +26,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
+import me.tatarka.bindingcollectionadapter2.collections.DiffObservableList;
 import me.tatarka.bindingcollectionadapter2.collections.MergeObservableList;
 import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass;
 
