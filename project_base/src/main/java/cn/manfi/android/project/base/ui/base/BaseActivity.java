@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -66,6 +67,14 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
         activity = this;
         ((BaseApp) getApplication()).addActivity(activity);
         setBaseUI();
+        findViewById(android.R.id.content).getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+            @Override
+            public void onGlobalLayout() {
+                initView();
+                findViewById(android.R.id.content).getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
     }
 
     @Override
@@ -73,7 +82,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
     protected void onStart() {
         super.onStart();
         lifecycleSubject.onNext(ActivityEvent.START);
-        initView();
     }
 
     @Override
