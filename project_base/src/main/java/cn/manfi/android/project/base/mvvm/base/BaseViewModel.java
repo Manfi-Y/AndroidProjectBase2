@@ -73,6 +73,15 @@ public class BaseViewModel<T extends Activity> implements ViewModel {
     }
 
     /**
+     * 弹出键盘
+     *
+     * @param view 通常是EditText
+     */
+    public void showSoftKeyboard(View view) {
+        baseUI.showSoftKeyboard(view);
+    }
+
+    /**
      * 隐藏键盘
      *
      * @param view 通常是EditText

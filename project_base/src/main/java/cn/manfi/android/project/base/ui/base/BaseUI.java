@@ -67,6 +67,18 @@ public class BaseUI {
     }
 
     /**
+     * 弹出键盘
+     *
+     * @param view 通常是EditText
+     */
+    public void showSoftKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (view != null && imm != null) {
+            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+        }
+    }
+
+    /**
      * 隐藏键盘
      *
      * @param view 通常是EditText
