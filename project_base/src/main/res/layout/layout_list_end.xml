@@ -25,7 +25,7 @@
             android:layout_centerInParent="true"
             android:layout_marginStart="8dp"
             android:text="@{viewModel.endText}"
-            android:textColor="@color/text_second_dark"
+            android:textColor="@color/text_second_light"
             android:textSize="12sp"
             android:visibility="@{TextUtils.isEmpty(viewModel.endText) ? View.GONE : View.VISIBLE}"
             tools:text="正在加载更多"/>

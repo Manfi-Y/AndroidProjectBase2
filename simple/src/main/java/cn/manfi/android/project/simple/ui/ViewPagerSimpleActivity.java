@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
-import cn.manfi.android.project.base.common.Constant;
-import cn.manfi.android.project.base.mvvm.messenger.Messenger;
 import cn.manfi.android.project.base.ui.base.BaseActivity;
 import cn.manfi.android.project.simple.R;
 import cn.manfi.android.project.simple.databinding.ActivityViewpagerSimpleBinding;
@@ -32,6 +30,8 @@ public class ViewPagerSimpleActivity extends BaseActivity {
         initToolbar();
 
         dataBinding.stl.setViewPager(dataBinding.vp);
+
+        dataBinding.getViewModel().setUpData();
     }
 
     void initToolbar() {

@@ -23,7 +23,9 @@ public class ViewPagerSimpleViewModel extends BaseViewModel<ViewPagerSimpleActiv
 
     public ViewPagerSimpleViewModel(ViewPagerSimpleActivity activity) {
         super(activity);
+    }
 
+    public void setUpData() {
         for (int i = 0; i < 10; i++) {
             itemList.add(new ViewPagerItemViewModel(activity, i));
         }
