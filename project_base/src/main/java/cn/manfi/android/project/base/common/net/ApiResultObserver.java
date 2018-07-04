@@ -5,6 +5,7 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.TimeoutException;
 
+import cn.manfi.android.project.base.common.Config;
 import cn.manfi.android.project.base.common.NetworkUtil;
 import cn.manfi.android.project.base.common.log.LogUtil;
 import cn.manfi.android.project.base.mvvm.base.BaseViewModel;
@@ -20,7 +21,6 @@ import retrofit2.HttpException;
 public abstract class ApiResultObserver<T> implements Observer<T> {
 
     private final String TAG = getClass().getSimpleName();
-    private final boolean DEBUG = true;
 
     private BaseViewModel viewModel;
     private ApiRequestStatus apiRequestStatus;
@@ -51,7 +51,7 @@ public abstract class ApiResultObserver<T> implements Observer<T> {
             if (apiRequestStatus != null) {
                 apiRequestStatus.setFinish(true);
             }
-            LogUtil.d(DEBUG, TAG, "没有网络");
+            LogUtil.d(Config.isDebug(), TAG, "没有网络");
             onNoNetwork();
         }
     }
@@ -64,17 +64,17 @@ public abstract class ApiResultObserver<T> implements Observer<T> {
         if (e instanceof ConnectException || e instanceof TimeoutException
                 || e instanceof SocketTimeoutException) {
             // 网络连接错误
-            LogUtil.w(DEBUG, TAG, "网络连接异常");
+            LogUtil.w(Config.isDebug(), TAG, "网络连接异常");
             onNormalError(e, "网络连接异常");
             return;
         } else if (e instanceof HttpException) {
             // 404等错误
-            LogUtil.w(DEBUG, TAG, "服务器开小差");
+            LogUtil.w(Config.isDebug(), TAG, "服务器开小差");
             onNormalError(e, "服务器开小差");
             return;
         } else if (e instanceof IOException) {
             // Json数据解析错误
-            LogUtil.w(DEBUG, TAG, "数据解析错误");
+            LogUtil.w(Config.isDebug(), TAG, "数据解析错误");
             onNormalError(e, "数据解析错误");
             return;
         }
