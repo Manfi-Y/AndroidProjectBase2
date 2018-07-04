@@ -207,6 +207,13 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
         baseUI.hideSoftKeyboard(view);
     }
 
+    /**
+     * 没有网络回调
+     */
+    public void onNetworkUnavaliable() {
+        baseUI.onNetworkUnavaliable();
+    }
+
     protected abstract void initView();
 
     /**

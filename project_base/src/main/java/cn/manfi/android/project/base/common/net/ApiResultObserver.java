@@ -8,7 +8,6 @@ import java.util.concurrent.TimeoutException;
 import cn.manfi.android.project.base.common.NetworkUtil;
 import cn.manfi.android.project.base.common.log.LogUtil;
 import cn.manfi.android.project.base.mvvm.base.BaseViewModel;
-import cn.manfi.android.project.base.ui.base.BaseActivity;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -79,11 +78,11 @@ public abstract class ApiResultObserver<T> implements Observer<T> {
             onNormalError(new Throwable("服务器开小差", e));
         } else if (e instanceof IOException) {
             // Json数据解析错误
-            LogUtil.w(DEBUG, TAG, "Json数据解析错误");
+            LogUtil.w(DEBUG, TAG, "数据解析错误");
             /*if (viewModel != null && viewModel.getActivity() instanceof BaseActivity) {
                 ((BaseActivity) viewModel.getActivity()).showToast("Json数据解析错误");
             }*/
-            onNormalError(new Throwable("Json数据解析错误", e));
+            onNormalError(new Throwable("数据解析错误", e));
         }
         e.printStackTrace();
     }
@@ -96,10 +95,13 @@ public abstract class ApiResultObserver<T> implements Observer<T> {
     }
 
     public void onNormalError(@NonNull Throwable e) {
-
+        e.printStackTrace();
     }
 
     public void onNoNetwork() {
+        if (viewModel != null) {
+            viewModel.onNetworkUnavaliable();
+        }
     }
 
     public ApiRequestStatus getApiRequestStatus() {

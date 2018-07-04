@@ -89,4 +89,11 @@ public class BaseUI {
             imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
+
+    /**
+     * 没有网络回调
+     */
+    public void onNetworkUnavaliable() {
+        showToast("没有网络", Toast.LENGTH_LONG);
+    }
 }

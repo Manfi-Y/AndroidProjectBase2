@@ -89,4 +89,11 @@ public class BaseViewModel<T extends Activity> implements ViewModel {
     public void hideSoftKeyboard(View view) {
         baseUI.hideSoftKeyboard(view);
     }
+
+    /**
+     * 没有网络回调
+     */
+    public void onNetworkUnavaliable() {
+        baseUI.onNetworkUnavaliable();
+    }
 }
