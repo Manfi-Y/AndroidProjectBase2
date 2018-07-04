@@ -65,24 +65,18 @@ public abstract class ApiResultObserver<T> implements Observer<T> {
                 || e instanceof SocketTimeoutException) {
             // 网络连接错误
             LogUtil.w(DEBUG, TAG, "网络连接异常");
-            /*if (viewModel != null && viewModel.getActivity() instanceof BaseActivity) {
-                ((BaseActivity) viewModel.getActivity()).showToast("网络连接异常");
-            }*/
-            onNormalError(new Throwable("网络连接异常", e));
+            onNormalError(e, "网络连接异常");
+            return;
         } else if (e instanceof HttpException) {
             // 404等错误
             LogUtil.w(DEBUG, TAG, "服务器开小差");
-            /*if (viewModel != null && viewModel.getActivity() instanceof BaseActivity) {
-                ((BaseActivity) viewModel.getActivity()).showToast("服务器开小差");
-            }*/
-            onNormalError(new Throwable("服务器开小差", e));
+            onNormalError(e, "服务器开小差");
+            return;
         } else if (e instanceof IOException) {
             // Json数据解析错误
             LogUtil.w(DEBUG, TAG, "数据解析错误");
-            /*if (viewModel != null && viewModel.getActivity() instanceof BaseActivity) {
-                ((BaseActivity) viewModel.getActivity()).showToast("Json数据解析错误");
-            }*/
-            onNormalError(new Throwable("数据解析错误", e));
+            onNormalError(e, "数据解析错误");
+            return;
         }
         e.printStackTrace();
     }
@@ -94,7 +88,7 @@ public abstract class ApiResultObserver<T> implements Observer<T> {
         }
     }
 
-    public void onNormalError(@NonNull Throwable e) {
+    public void onNormalError(@NonNull Throwable e, @NonNull String uiMsg) {
         e.printStackTrace();
     }
 
