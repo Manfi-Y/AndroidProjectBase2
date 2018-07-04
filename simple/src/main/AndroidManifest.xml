@@ -49,7 +49,6 @@
         <activity
             android:name=".ui.DragLayoutSimpleActivity"
             android:theme="@style/AppTheme"/>
-        <activity android:name=".ui.TestActivity"/>
     </application>
 
 </manifest>

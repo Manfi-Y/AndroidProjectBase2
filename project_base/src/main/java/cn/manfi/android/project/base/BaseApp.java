@@ -107,7 +107,7 @@ public class BaseApp extends Application {
 
     class NetworkBroadcast extends BroadcastReceiver {
 
-        private boolean isHasNetwork = false;
+        private boolean isHasNetwork;
 
         public NetworkBroadcast(Context context) {
             this.isHasNetwork = NetworkUtil.isNetworkConnected(context);

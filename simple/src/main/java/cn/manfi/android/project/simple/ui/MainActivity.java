@@ -58,9 +58,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.layout_DragLayoutSimple:
                 startActivity(new Intent(activity, DragLayoutSimpleActivity.class));
                 break;
-            case R.id.layout_TestRecyclerView:
-                startActivity(new Intent(activity, TestActivity.class));
-                break;
         }
     }
 }

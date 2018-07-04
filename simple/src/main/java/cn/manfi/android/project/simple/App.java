@@ -11,7 +11,6 @@ import cn.manfi.android.project.base.common.log.LogConfig;
  * Application
  * Created by manfi on 2017/9/20.
  */
-
 public class App extends BaseApp {
 
     private static App instance;

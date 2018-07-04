@@ -247,30 +247,6 @@
                         android:textSize="12sp"/>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/layout_TestRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:onClick="@{click}"
-                    android:orientation="vertical"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingTop="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Test RecyclerView"
-                        android:textSize="16sp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textSize="12sp"/>
-                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </android.support.design.widget.CoordinatorLayout>
