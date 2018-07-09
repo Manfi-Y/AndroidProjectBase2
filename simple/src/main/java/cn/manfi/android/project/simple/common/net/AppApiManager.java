@@ -24,7 +24,7 @@ public class AppApiManager extends ApiManager {
         private static final AppApiManager INSTANCE = new AppApiManager();
     }
 
-    public static final AppApiManager getInstance() {
+    public static AppApiManager getInstance() {
         return AppApiManager.ApiManagerHolder.INSTANCE;
     }
 

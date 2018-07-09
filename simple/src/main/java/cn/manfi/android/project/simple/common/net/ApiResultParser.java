@@ -12,7 +12,7 @@ import io.reactivex.functions.Function;
 public class ApiResultParser<T> implements Function<ApiResult<T>, T> {
 
     @Override
-    public T apply(@NonNull ApiResult<T> tApiResult) throws Exception {
+    public T apply(@NonNull ApiResult<T> tApiResult) {
         if (!tApiResult.isSuccess()) {
             processApiResult(tApiResult);
         }

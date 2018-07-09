@@ -41,13 +41,14 @@ public class BaseUI {
      *
      * @param msg Loading title
      */
-    public void showLoading(@NonNull String msg, boolean cancelable, @Nullable DialogInterface.OnCancelListener cancelListener) {
+    public void showLoading(@NonNull String msg, boolean cancelTouchOutside, boolean cancelable, @Nullable DialogInterface.OnCancelListener cancelListener) {
         if (loadingDialog == null) {
             loadingDialog = new MaterialDialog.Builder(activity)
                     .progress(true, 0)
                     .build();
         }
         loadingDialog.setContent(msg);
+        loadingDialog.setCanceledOnTouchOutside(cancelTouchOutside);
         loadingDialog.setCancelable(cancelable);
         if (cancelable && cancelListener != null) {
             loadingDialog.setOnCancelListener(cancelListener);

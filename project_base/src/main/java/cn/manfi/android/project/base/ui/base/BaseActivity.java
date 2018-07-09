@@ -150,7 +150,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
     }
 
     public void showLoading(@NonNull String msg) {
-        showLoading(msg, false, null);
+        showLoading(msg, false, false, null);
     }
 
     /**
@@ -158,8 +158,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
      *
      * @param msg Loading title
      */
-    public void showLoading(@NonNull String msg, boolean cancelable, @Nullable DialogInterface.OnCancelListener cancelListener) {
-        baseUI.showLoading(msg, cancelable, cancelListener);
+    public void showLoading(@NonNull String msg, boolean cancelTouchOutside, boolean cancelable, @Nullable DialogInterface.OnCancelListener cancelListener) {
+        baseUI.showLoading(msg, cancelTouchOutside, cancelable, cancelListener);
     }
 
     /**
