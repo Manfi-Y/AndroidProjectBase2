@@ -48,7 +48,9 @@ public abstract class ApiResultObserver<T> implements Observer<T> {
         }
         if (viewModel != null && !NetworkUtil.isNetworkConnected(viewModel.getActivity())) {
             d.dispose();
-            onComplete();
+            if (apiRequestStatus != null) {
+                apiRequestStatus.setFinish(true);
+            }
             LogUtil.d(Config.isDebug(), TAG, "没有网络");
             onNoNetwork();
         }
