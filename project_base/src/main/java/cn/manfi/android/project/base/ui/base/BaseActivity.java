@@ -66,7 +66,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
         lifecycleSubject.onNext(ActivityEvent.CREATE);
         activity = this;
         ((BaseApp) getApplication()).addActivity(activity);
-        setBaseUI();
+        baseUI = getCustomBaseUI();
         findViewById(android.R.id.content).getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
             @Override
@@ -137,8 +137,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
     /**
      * 可自行重写BaseUI
      */
-    protected void setBaseUI() {
-        baseUI = new BaseUI(activity);
+    protected BaseUI getCustomBaseUI() {
+        return new BaseUI(activity);
     }
 
     public void showToast(String msg) {

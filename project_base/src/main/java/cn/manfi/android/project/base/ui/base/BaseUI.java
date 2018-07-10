@@ -13,7 +13,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 public class BaseUI {
 
-    private Activity activity;
+    protected Activity activity;
 
     private Toast toast;
     private MaterialDialog loadingDialog;
