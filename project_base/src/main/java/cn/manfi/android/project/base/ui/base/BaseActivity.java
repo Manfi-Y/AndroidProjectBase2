@@ -42,7 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
 
     protected Activity activity;
 
-    private BaseUI baseUI;
+    protected BaseUI baseUI;
 
     private final BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
 

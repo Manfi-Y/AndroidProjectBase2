@@ -22,7 +22,7 @@ public class BaseViewModel<T extends Activity> implements ViewModel {
 
     protected T activity;
 
-    private BaseUI baseUI;
+    protected BaseUI baseUI;
 
     public BaseViewModel(T activity) {
         this.activity = activity;
