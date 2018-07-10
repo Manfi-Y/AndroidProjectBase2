@@ -26,7 +26,7 @@ public class BaseViewModel<T extends Activity> implements ViewModel {
 
     public BaseViewModel(T activity) {
         this.activity = activity;
-        setBaseUI();
+        baseUI = getCustomBaseUI();
     }
 
     public Activity getActivity() {
@@ -36,11 +36,11 @@ public class BaseViewModel<T extends Activity> implements ViewModel {
     /**
      * 可自行重写BaseUI
      */
-    protected void setBaseUI() {
+    protected BaseUI getCustomBaseUI() {
         if (activity instanceof BaseActivity) {
-            baseUI = ((BaseActivity) activity).getBaseUI();
+            return ((BaseActivity) activity).getBaseUI();
         } else {
-            baseUI = new BaseUI(activity);
+            return new BaseUI(activity);
         }
     }
 
