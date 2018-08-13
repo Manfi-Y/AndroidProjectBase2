@@ -73,4 +73,14 @@ public final class ImageViewBindingAdapter {
             }, UiThreadImmediateExecutorService.getInstance());
         }
     }
+
+    @BindingAdapter("android:src")
+    public static void setSrc(ImageView view, Bitmap bitmap) {
+        view.setImageBitmap(bitmap);
+    }
+
+    @BindingAdapter("android:src")
+    public static void setSrc(ImageView view, int resId) {
+        view.setImageResource(resId);
+    }
 }

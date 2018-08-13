@@ -14,10 +14,13 @@ import cn.manfi.android.project.simple.R;
 import cn.manfi.android.project.simple.databinding.ActivityRxJavaSimpleBinding;
 import cn.manfi.android.project.simple.ui.base.SwipeBackAppActivity;
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -50,7 +53,7 @@ public class RxJavaSimpleActivity extends SwipeBackAppActivity {
 
     @Override
     protected void initView() {
-        binding.btnStart.setOnClickListener(v -> rxJava9());
+        binding.btnStart.setOnClickListener(v -> rxJava10());
     }
 
     private void rxJava1() {
@@ -345,5 +348,37 @@ public class RxJavaSimpleActivity extends SwipeBackAppActivity {
 
                     }
                 });
+    }
+
+    private void rxJava10() {
+        Observable<Integer> ob1 = Observable.just(1).flatMap(new Function<Integer, ObservableSource<Integer>>() {
+
+            @Override
+            public ObservableSource<Integer> apply(Integer integer) throws Exception {
+                return Observable.empty();
+            }
+        }).map(integer -> 2);
+        ob1.subscribe(new Observer<Integer>() {
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                System.out.println("RxJavaSimpleActivity.onComplete");
+            }
+        });
     }
 }
