@@ -46,7 +46,7 @@ public class PermissionUtils {
                 notGrantPermList.add(perm);
             }
         }
-        return notGrantPermList.size() == 0 ? null : notGrantPermList.toArray(new String[]{});
+        return notGrantPermList.size() == 0 ? new String[]{} : notGrantPermList.toArray(new String[]{});
     }
 
     /**
