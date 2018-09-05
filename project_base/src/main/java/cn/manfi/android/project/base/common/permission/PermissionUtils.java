@@ -36,7 +36,7 @@ public class PermissionUtils {
      */
     public static String[] checkPermissions(Context context, String... perms) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return null;
+            return new String[]{};
         }
 
         List<String> notGrantPermList = new ArrayList<>(perms.length);
