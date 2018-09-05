@@ -54,7 +54,7 @@ public class CheckPermissionSimpleActivity extends BaseActivity {
                     if (granted) {
                         showToast("所有权限允许");
                     } else if (!PermissionUtils.somePermissionsNeedAskAgain(activity, perms)) {
-                        askPermanentlyDeniedPermission(PermissionUtils.hasPermissions(activity, perms));
+                        askPermanentlyDeniedPermission(PermissionUtils.checkPermissions(activity, perms));
                     }
                 }));
     }

@@ -110,7 +110,7 @@ public abstract class SwipeBackAppActivity extends SwipeBackActivity implements 
      * @param perms ~
      */
     public void askPermanentlyDeniedPermission(String... perms) {
-        String[] notGrantPermList = PermissionUtils.hasPermissions(activity, perms);
+        String[] notGrantPermList = PermissionUtils.checkPermissions(activity, perms);
         final List<String> permanentlyDeniedPermList = new ArrayList<>();
         if (notGrantPermList != null) {
             permanentlyDeniedPermList.addAll(Arrays.asList(notGrantPermList));

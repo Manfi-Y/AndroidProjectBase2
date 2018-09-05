@@ -204,7 +204,7 @@ public class RetrofitSimpleActivity extends SwipeBackAppActivity implements View
                     if (granted) {
                         return AppApiManager.getInstance().download(offlineDataInfo.getUrl(), filePath, fileName);
                     } else if (!PermissionUtils.somePermissionsNeedAskAgain(activity, perms)) {
-                        askPermanentlyDeniedPermission(PermissionUtils.hasPermissions(activity, perms));
+                        askPermanentlyDeniedPermission(PermissionUtils.checkPermissions(activity, perms));
                     }
                     return Flowable.error(new Exception("没有权限"));
                 })

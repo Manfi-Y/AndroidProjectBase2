@@ -19,7 +19,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -355,30 +355,38 @@ public class RxJavaSimpleActivity extends SwipeBackAppActivity {
 
             @Override
             public ObservableSource<Integer> apply(Integer integer) throws Exception {
-                return Observable.empty();
+                return Observable.never();
             }
         }).map(integer -> 2);
-        ob1.subscribe(new Observer<Integer>() {
+        ob1
+                .doOnTerminate(new Action() {
 
-            @Override
-            public void onSubscribe(Disposable d) {
+                    @Override
+                    public void run() throws Exception {
+                        System.out.println("RxJavaSimpleActivity.doOnTerminate");
+                    }
+                })
+                .subscribe(new Observer<Integer>() {
 
-            }
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            @Override
-            public void onNext(Integer integer) {
+                    }
 
-            }
+                    @Override
+                    public void onNext(Integer integer) {
 
-            @Override
-            public void onError(Throwable e) {
+                    }
 
-            }
+                    @Override
+                    public void onError(Throwable e) {
 
-            @Override
-            public void onComplete() {
-                System.out.println("RxJavaSimpleActivity.onComplete");
-            }
-        });
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        System.out.println("RxJavaSimpleActivity.onComplete");
+                    }
+                });
     }
 }
