@@ -3,7 +3,10 @@ package cn.manfi.android.project.simple.ui;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -53,7 +56,9 @@ public class RxJavaSimpleActivity extends SwipeBackAppActivity {
 
     @Override
     protected void initView() {
-        binding.btnStart.setOnClickListener(v -> rxJava10());
+        binding.btnStart.setOnClickListener(v -> rxJava11());
+        binding.btnEnd.setOnClickListener(v -> {
+        });
     }
 
     private void rxJava1() {
@@ -381,6 +386,74 @@ public class RxJavaSimpleActivity extends SwipeBackAppActivity {
                     @Override
                     public void onError(Throwable e) {
 
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        System.out.println("RxJavaSimpleActivity.onComplete");
+                    }
+                });
+    }
+
+    private Disposable dPingNetwork;
+
+    private void rxJava11() {
+        if (dPingNetwork != null && !dPingNetwork.isDisposed()) {
+            return;
+        }
+        Observable.interval(3, TimeUnit.SECONDS)
+                .flatMap((Function<Long, ObservableSource<Float>>) aLong -> Observable.create(
+                        emitter -> {
+                            System.out.println("发起Ping");
+                            String str;
+                            Runtime runtime = Runtime.getRuntime();
+                            try {
+                                // 超时1秒，请求1次
+                                Process p = runtime.exec("ping -c 1 api.fxhb.com");
+                                int ret = p.waitFor();
+                                if (ret != 0) { // 网络真正可用==0
+                                    emitter.onError(new Throwable(new InterruptedException()));
+                                    return;
+                                }
+                                BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                                int i;
+                                char[] buffer = new char[4096];
+                                StringBuilder output = new StringBuilder();
+                                while ((i = reader.read(buffer)) > 0) {
+                                    output.append(buffer, 0, i);
+                                }
+                                reader.close();
+                                str = output.toString();
+                                String strTime = null;
+                                if (str.contains("time=") && str.contains(" ms")) {
+                                    strTime = str.substring(str.indexOf("time=") + "time=".length(), str.indexOf(" ms"));
+                                }
+                                float time = Float.valueOf(TextUtils.isEmpty(strTime) ? "0" : strTime);
+
+                                emitter.onNext(time);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                                emitter.onError(e);
+                            }
+                        }))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Float>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        dPingNetwork = d;
+                    }
+
+                    @Override
+                    public void onNext(Float aFloat) {
+                        System.out.println("RxJavaSimpleActivity.onNext:网络延迟" + aFloat);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println("RxJavaSimpleActivity.onError");
+                        dPingNetwork.dispose();
                     }
 
                     @Override
