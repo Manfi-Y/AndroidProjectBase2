@@ -3,6 +3,7 @@ package cn.manfi.android.project.base.common.net;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.concurrent.TimeoutException;
 
 import cn.manfi.android.project.base.common.Config;
@@ -15,8 +16,7 @@ import io.reactivex.disposables.Disposable;
 import retrofit2.HttpException;
 
 /**
- * Api接口返回Observer
- * Created by manfi on 2017/9/21.
+ * Api接口返回Observer Created by manfi on 2017/9/21.
  */
 public abstract class ApiResultObserver<T> implements Observer<T> {
 
@@ -61,8 +61,7 @@ public abstract class ApiResultObserver<T> implements Observer<T> {
         if (apiRequestStatus != null) {
             apiRequestStatus.setFinish(true);
         }
-        if (e instanceof ConnectException || e instanceof TimeoutException
-                || e instanceof SocketTimeoutException) {
+        if (e instanceof ConnectException || e instanceof TimeoutException || e instanceof SocketTimeoutException || e instanceof UnknownHostException) {
             // 网络连接错误
             LogUtil.w(Config.isDebug(), TAG, "网络连接异常");
             onNormalError(e, "网络连接异常");

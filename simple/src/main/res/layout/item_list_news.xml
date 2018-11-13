@@ -17,8 +17,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp">
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
 
         <android.support.design.internal.ForegroundLinearLayout
             android:layout_width="match_parent"
@@ -38,10 +38,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingBottom="4dp"
                 android:paddingLeft="8dp"
+                android:paddingTop="4dp"
                 android:paddingRight="8dp"
-                android:paddingTop="4dp">
+                android:paddingBottom="4dp">
 
                 <TextView
                     android:id="@+id/tv_Title"
@@ -67,7 +67,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text='@{FormatUtils.formatTime(itemViewModel.news.get().getNewstime()*1000, "yyyy-MM-dd")}'
-                        android:textColor="@color/text_second_dark"
+                        android:textColor="@android:color/secondary_text_dark"
                         android:textSize="10sp"
                         tools:text="4 hours ago"/>
 
