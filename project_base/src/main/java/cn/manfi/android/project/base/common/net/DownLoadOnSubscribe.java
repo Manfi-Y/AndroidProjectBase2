@@ -14,8 +14,7 @@ import okio.Okio;
 import okio.Source;
 
 /**
- * 下载进度被观察者
- * Created by manfi on 2018/1/12.
+ * 下载进度被观察者 Created by manfi on 2018/1/12.
  */
 
 public class DownLoadOnSubscribe implements FlowableOnSubscribe<Object> {
@@ -60,7 +59,9 @@ public class DownLoadOnSubscribe implements FlowableOnSubscribe<Object> {
             sink.close();
             flowableEmitter.onComplete();
         } catch (Exception exception) {
-            flowableEmitter.onError(exception);
+            if (!flowableEmitter.isCancelled()) {
+                flowableEmitter.onError(exception);
+            }
         }
     }
 

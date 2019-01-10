@@ -42,8 +42,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Retrofit Simple
- * Created by manfi on 2017/9/21.
+ * Retrofit Simple Created by manfi on 2017/9/21.
  */
 
 public class RetrofitSimpleActivity extends SwipeBackAppActivity implements View.OnClickListener {
@@ -84,7 +83,10 @@ public class RetrofitSimpleActivity extends SwipeBackAppActivity implements View
                 download(offlineDataInfo);
                 break;
             case R.id.btn_Start5:
-                upload();
+//                upload();
+                if (downLoadSubscriber != null) {
+                    downLoadSubscriber.cancel();
+                }
                 break;
         }
     }
@@ -153,12 +155,14 @@ public class RetrofitSimpleActivity extends SwipeBackAppActivity implements View
                 });
     }
 
+    private DownLoadSubscriber downLoadSubscriber;
+
     private void download(OfflineDataInfo offlineDataInfo) {
         String[] perms = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
         String filePath = FileUtils.getSDCardPath();
         String fileName = offlineDataInfo.getUrl().substring(offlineDataInfo.getUrl().lastIndexOf("/") + 1);
 
-        DownLoadSubscriber downLoadSubscriber = new DownLoadSubscriber() {
+        downLoadSubscriber = new DownLoadSubscriber() {
 
             @Override
             protected void onRequestDownload() {
