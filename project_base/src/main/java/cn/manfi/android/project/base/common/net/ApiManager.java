@@ -69,7 +69,6 @@ public class ApiManager {
                 .flatMap(downloadUrl -> downloadService.download("bytes=" + startPoint + "-", downloadUrl))
                 .compose(new DownLoadTransformer(filePath, fileName))
                 .observeOn(AndroidSchedulers.mainThread());
-
     }
 
     /**
