@@ -83,10 +83,7 @@ public class RetrofitSimpleActivity extends SwipeBackAppActivity implements View
                 download(offlineDataInfo);
                 break;
             case R.id.btn_Start5:
-//                upload();
-                if (downLoadSubscriber != null) {
-                    downLoadSubscriber.cancel();
-                }
+                upload();
                 break;
         }
     }
@@ -190,6 +187,7 @@ public class RetrofitSimpleActivity extends SwipeBackAppActivity implements View
             public void onComplete() {
                 super.onComplete();
                 LogUtil.i(DEBUG, TAG, "onDownloadFinish");
+                binding.pbProgress.setIndeterminate(false);
                 binding.tvProgress.setText("下载完成");
             }
 
@@ -206,7 +204,8 @@ public class RetrofitSimpleActivity extends SwipeBackAppActivity implements View
                 .toFlowable(BackpressureStrategy.LATEST)
                 .concatMap(granted -> {
                     if (granted) {
-                        return AppApiManager.getInstance().download(offlineDataInfo.getUrl(), filePath, fileName);
+                        File file = new File(filePath, fileName);
+                        return AppApiManager.getInstance().download(offlineDataInfo.getUrl(), filePath, fileName, file.length()).delaySubscription(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread());
                     } else if (!PermissionUtils.somePermissionsNeedAskAgain(activity, perms)) {
                         askPermanentlyDeniedPermission(PermissionUtils.checkPermissions(activity, perms));
                     }

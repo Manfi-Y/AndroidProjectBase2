@@ -22,8 +22,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 /**
- * Api管理工具
- * Created by manfi on 2018/1/18.
+ * Api管理工具 Created by manfi on 2018/1/18.
  */
 
 public class ApiManager {
@@ -60,13 +59,14 @@ public class ApiManager {
                 .build();
     }
 
-    public synchronized Flowable<Object> download(@NonNull String url, @NonNull String filePath, @NonNull String fileName) {
+    public synchronized Flowable<Object> download(@NonNull String url, @NonNull String filePath, @NonNull String fileName, long startPoint) {
         if (downloadService == null) {
             downloadService = retrofit.create(DownloadService.class);
         }
+
         return Flowable.just(url)
                 .subscribeOn(Schedulers.io())
-                .flatMap(downloadUrl -> downloadService.download(downloadUrl))
+                .flatMap(downloadUrl -> downloadService.download("bytes=" + startPoint + "-", downloadUrl))
                 .compose(new DownLoadTransformer(filePath, fileName))
                 .observeOn(AndroidSchedulers.mainThread());
 

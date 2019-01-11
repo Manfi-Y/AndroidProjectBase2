@@ -7,6 +7,7 @@ import io.reactivex.Flowable;
 import io.reactivex.FlowableTransformer;
 import io.reactivex.annotations.NonNull;
 import okhttp3.ResponseBody;
+import retrofit2.Response;
 
 /**
  * 下载进度观察转换器
@@ -16,7 +17,7 @@ import okhttp3.ResponseBody;
  * Created by manfi on 2018/1/12.
  */
 
-public class DownLoadTransformer implements FlowableTransformer<ResponseBody, Object> {
+public class DownLoadTransformer implements FlowableTransformer<Response<ResponseBody>, Object> {
 
     /**
      * 写入文件地址
@@ -33,9 +34,12 @@ public class DownLoadTransformer implements FlowableTransformer<ResponseBody, Ob
     }
 
     @Override
-    public Publisher<Object> apply(@NonNull Flowable<ResponseBody> upstream) {
-        return upstream.flatMap(responseBody -> {
-            DownLoadOnSubscribe downLoadOnSubscribe = new DownLoadOnSubscribe(responseBody, filePath, fileName);
+    public Publisher<Object> apply(@NonNull Flowable<Response<ResponseBody>> upstream) {
+        return upstream.flatMap(response -> {
+            if (response.body() == null || response.body().source() == null) {
+                return Flowable.empty();
+            }
+            DownLoadOnSubscribe downLoadOnSubscribe = new DownLoadOnSubscribe(response.body(), filePath, fileName);
             return Flowable.create(downLoadOnSubscribe, BackpressureStrategy.BUFFER);
         });
     }

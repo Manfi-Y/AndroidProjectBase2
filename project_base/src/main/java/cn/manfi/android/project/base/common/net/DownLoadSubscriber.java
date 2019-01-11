@@ -16,6 +16,7 @@ import retrofit2.HttpException;
 
 /**
  * 下载进度观察者
+ * <p>
  * Created by manfi on 2018/1/12.
  */
 public abstract class DownLoadSubscriber implements Subscriber<Object> {

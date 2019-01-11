@@ -1,11 +1,14 @@
 package cn.manfi.android.project.base.common.net;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 
 import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.annotations.NonNull;
+import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.Buffer;
 import okio.BufferedSink;
@@ -14,7 +17,9 @@ import okio.Okio;
 import okio.Source;
 
 /**
- * 下载进度被观察者 Created by manfi on 2018/1/12.
+ * 下载进度被观察者
+ * <p>
+ * Created by manfi on 2018/1/12.
  */
 
 public class DownLoadOnSubscribe implements FlowableOnSubscribe<Object> {
@@ -43,16 +48,25 @@ public class DownLoadOnSubscribe implements FlowableOnSubscribe<Object> {
     }
 
     private void init(ResponseBody responseBody) throws IOException {
-        totalSize = responseBody.contentLength();
         source = responseBody.source();
         progressSource = getProgressSource(source);
         // 写入文件
-        sink = Okio.buffer(Okio.sink(new File(filePath + fileName)));
+//        sink = Okio.buffer(Okio.sink(new File(filePath + fileName)));
+        File file = new File(filePath, fileName);
+        downloadedSize = file.length();
+        totalSize = responseBody.contentLength() + downloadedSize;
+        RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rwd");
+        randomAccessFile.seek(downloadedSize);
+        sink = Okio.buffer(Okio.sink(new FileOutputStream(randomAccessFile.getFD())));
     }
 
     @Override
     public void subscribe(@NonNull FlowableEmitter<Object> e) {
         this.flowableEmitter = e;
+        if (downloadedSize >= totalSize) {
+            flowableEmitter.onComplete();
+            return;
+        }
         try {
             flowableEmitter.onNext(totalSize);
             sink.writeAll(Okio.buffer(progressSource));
