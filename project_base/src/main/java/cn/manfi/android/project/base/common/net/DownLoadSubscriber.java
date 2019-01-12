@@ -47,7 +47,7 @@ public abstract class DownLoadSubscriber implements Subscriber<Object> {
             onNoNetwork();
             return;
         }
-        subscription.request(1);
+        s.request(Long.MAX_VALUE);
     }
 
     @Override
@@ -58,7 +58,6 @@ public abstract class DownLoadSubscriber implements Subscriber<Object> {
         if (o instanceof Integer) {
             onProgress((Integer) o);
         }
-        subscription.request(1);
     }
 
     @Override
