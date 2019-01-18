@@ -3,7 +3,6 @@ package cn.manfi.android.project.base.common.net;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 
 import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
@@ -50,13 +49,10 @@ public class DownLoadOnSubscribe implements FlowableOnSubscribe<Object> {
         source = responseBody.source();
         progressSource = getProgressSource(source);
         // 写入文件
-//        sink = Okio.buffer(Okio.sink(new File(filePath + fileName)));
         File file = new File(filePath, fileName);
         downloadedSize = file.length();
         totalSize = responseBody.contentLength() + downloadedSize;
-        RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rwd");
-        randomAccessFile.seek(downloadedSize);
-        sink = Okio.buffer(Okio.sink(new FileOutputStream(randomAccessFile.getFD())));
+        sink = Okio.buffer(Okio.sink(new FileOutputStream(file, downloadedSize != 0)));
     }
 
     @Override

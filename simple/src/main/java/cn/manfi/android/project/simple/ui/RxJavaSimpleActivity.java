@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -16,6 +19,7 @@ import cn.manfi.android.project.base.common.log.LogUtil;
 import cn.manfi.android.project.simple.R;
 import cn.manfi.android.project.simple.databinding.ActivityRxJavaSimpleBinding;
 import cn.manfi.android.project.simple.ui.base.SwipeBackAppActivity;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
@@ -27,8 +31,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * RxJava simple
- * Created by manfi on 2017/9/19.
+ * RxJava simple Created by manfi on 2017/9/19.
  */
 
 public class RxJavaSimpleActivity extends SwipeBackAppActivity {
@@ -56,7 +59,7 @@ public class RxJavaSimpleActivity extends SwipeBackAppActivity {
 
     @Override
     protected void initView() {
-        binding.btnStart.setOnClickListener(v -> rxJava11());
+        binding.btnStart.setOnClickListener(v -> rxJava12());
         binding.btnEnd.setOnClickListener(v -> {
         });
     }
@@ -459,6 +462,50 @@ public class RxJavaSimpleActivity extends SwipeBackAppActivity {
                     @Override
                     public void onComplete() {
                         System.out.println("RxJavaSimpleActivity.onComplete");
+                    }
+                });
+    }
+
+    private void rxJava12() {
+        ArrayList<String> strList = new ArrayList<>();
+        strList.add("a");
+        strList.add("b");
+        strList.add("c");
+        strList.add("d");
+        strList.add("e");
+        strList.add("f");
+        strList.add("g");
+        strList.add("h");
+        Flowable.interval(10, TimeUnit.MILLISECONDS)
+                .onBackpressureBuffer()
+                .subscribe(new Subscriber<Long>() {
+
+                    @Override
+                    public void onSubscribe(Subscription s) {
+                        s.request(Long.MAX_VALUE);
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        try {
+                            Thread.sleep(500);
+                            System.out.println("count:" + aLong);
+                            for (String s : strList) {
+                                System.out.println(s);
+                            }
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
                     }
                 });
     }

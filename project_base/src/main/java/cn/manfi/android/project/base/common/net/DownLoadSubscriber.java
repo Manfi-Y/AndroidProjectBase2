@@ -38,7 +38,7 @@ public abstract class DownLoadSubscriber implements Subscriber<Object> {
 
     @Override
     public void onSubscribe(Subscription s) {
-        this.subscription = s;
+        subscription = s;
         onRequestDownload();
         if (viewModel != null && !NetworkUtil.isNetworkConnected(viewModel.getActivity())) {
             subscription.cancel();
@@ -47,7 +47,7 @@ public abstract class DownLoadSubscriber implements Subscriber<Object> {
             onNoNetwork();
             return;
         }
-        s.request(Long.MAX_VALUE);
+        subscription.request(Long.MAX_VALUE);
     }
 
     @Override
