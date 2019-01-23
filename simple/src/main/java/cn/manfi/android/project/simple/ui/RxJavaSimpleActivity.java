@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -19,7 +16,6 @@ import cn.manfi.android.project.base.common.log.LogUtil;
 import cn.manfi.android.project.simple.R;
 import cn.manfi.android.project.simple.databinding.ActivityRxJavaSimpleBinding;
 import cn.manfi.android.project.simple.ui.base.SwipeBackAppActivity;
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
@@ -467,39 +463,48 @@ public class RxJavaSimpleActivity extends SwipeBackAppActivity {
     }
 
     private void rxJava12() {
-        ArrayList<String> strList = new ArrayList<>();
-        strList.add("a");
-        strList.add("b");
-        strList.add("c");
-        strList.add("d");
-        strList.add("e");
-        strList.add("f");
-        strList.add("g");
-        strList.add("h");
-        Flowable.interval(10, TimeUnit.MILLISECONDS)
-                .onBackpressureBuffer()
-                .subscribe(new Subscriber<Long>() {
+        Observable<Object> ob1 = Observable.create(emitter -> {
+            emitter.onNext(1);
+            Thread.sleep(2000);
+            emitter.onNext(2);
+            Thread.sleep(2000);
+            emitter.onNext(3);
+            Thread.sleep(2000);
+            emitter.onNext(4);
+            Thread.sleep(2000);
+            emitter.onNext(5);
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io());
+
+        Observable<Object> ob2 = Observable.create(emitter -> {
+            emitter.onNext("a");
+            Thread.sleep(1000);
+            emitter.onNext("b");
+            Thread.sleep(1000);
+            emitter.onNext("c");
+            Thread.sleep(1000);
+            emitter.onNext("d");
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io());
+
+        Observable
+                .merge(ob1, ob2)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Object>() {
 
                     @Override
-                    public void onSubscribe(Subscription s) {
-                        s.request(Long.MAX_VALUE);
+                    public void onSubscribe(Disposable d) {
+
                     }
 
                     @Override
-                    public void onNext(Long aLong) {
-                        try {
-                            Thread.sleep(500);
-                            System.out.println("count:" + aLong);
-                            for (String s : strList) {
-                                System.out.println(s);
-                            }
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                    public void onNext(Object object) {
+                        System.out.println(object.toString());
                     }
 
                     @Override
-                    public void onError(Throwable t) {
+                    public void onError(Throwable e) {
 
                     }
 

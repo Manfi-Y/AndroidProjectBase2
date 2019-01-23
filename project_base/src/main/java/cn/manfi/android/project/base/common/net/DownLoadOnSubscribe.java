@@ -59,6 +59,7 @@ public class DownLoadOnSubscribe implements FlowableOnSubscribe<Object> {
     public void subscribe(@NonNull FlowableEmitter<Object> e) {
         this.flowableEmitter = e;
         if (downloadedSize >= totalSize) {
+            onProgress(100);
             flowableEmitter.onComplete();
             return;
         }
