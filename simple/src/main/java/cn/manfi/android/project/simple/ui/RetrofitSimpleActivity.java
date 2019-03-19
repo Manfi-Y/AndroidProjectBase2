@@ -205,14 +205,13 @@ public class RetrofitSimpleActivity extends SwipeBackAppActivity implements View
                 .concatMap(granted -> {
                     if (granted) {
                         File file = new File(filePath, fileName);
-                        file.delete();
                         return AppApiManager.getInstance().download(offlineDataInfo.getUrl(), filePath, fileName, file.length()).delaySubscription(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread());
                     } else if (!PermissionUtils.somePermissionsNeedAskAgain(activity, perms)) {
                         askPermanentlyDeniedPermission(PermissionUtils.checkPermissions(activity, perms));
                     }
                     return Flowable.error(new Exception("没有权限"));
                 })
-                .safeSubscribe(downLoadSubscriber);
+                .subscribe(downLoadSubscriber);
     }
 
     private void upload() {
