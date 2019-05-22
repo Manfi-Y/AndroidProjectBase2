@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 
 /**
  * 检测手机网络连接工具类
+ * <p>
  * Created by Manfi
  */
 public class NetworkUtil {
@@ -15,6 +16,7 @@ public class NetworkUtil {
      *
      * @param context     上下文
      * @param networkType 网络类型（如：ConnectivityManager.TYPE_xxx）<br>0:可用网络</br>
+     *
      * @return ~
      */
     public static NetworkInfo getNetWorkInfo(Context context, int networkType) {
@@ -32,6 +34,7 @@ public class NetworkUtil {
      * 手机是否有网络
      *
      * @param context ~
+     *
      * @return ~
      */
     public static boolean isNetworkConnected(Context context) {
@@ -43,6 +46,7 @@ public class NetworkUtil {
      * 手机WiFi是否连接
      *
      * @param context ~
+     *
      * @return ~
      */
     public static boolean isWifiConnected(Context context) {

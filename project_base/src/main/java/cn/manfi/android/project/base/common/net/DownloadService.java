@@ -9,7 +9,9 @@ import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
 /**
- * 下载Service Created by manfi on 2017/10/27.
+ * 下载Service
+ * <p>
+ * Created by manfi on 2017/10/27.
  */
 
 public interface DownloadService {

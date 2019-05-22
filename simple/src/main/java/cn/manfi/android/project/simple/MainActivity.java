@@ -1,5 +1,6 @@
 package cn.manfi.android.project.simple;
 
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
