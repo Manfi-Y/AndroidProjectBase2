@@ -1,7 +1,7 @@
 package cn.manfi.android.project.base.ui.base;
 
 import android.app.Activity;
-import android.databinding.ObservableField;
+import androidx.databinding.ObservableField;
 
 import cn.manfi.android.project.base.mvvm.base.BaseViewModel;
 

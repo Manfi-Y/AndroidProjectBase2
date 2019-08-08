@@ -1,7 +1,5 @@
 package cn.manfi.android.project.base.common.net.retrofit;
 
-import android.support.annotation.NonNull;
-
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -13,17 +11,17 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
+import androidx.annotation.NonNull;
 import cn.manfi.android.project.base.common.Config;
 import cn.manfi.android.project.base.common.log.LogUtil;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
-import static okhttp3.internal.Util.UTF_8;
+import static kotlin.text.Charsets.UTF_8;
 
 /**
- * 自定义Gson网络响应处理
- * Created by manfi on 2017/9/22.
+ * 自定义Gson网络响应处理 Created by manfi on 2017/9/22.
  */
 
 final class CustomGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {

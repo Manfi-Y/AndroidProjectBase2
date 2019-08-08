@@ -1,7 +1,7 @@
 package cn.manfi.android.project.base.mvvm.binding.adapter;
 
-import android.databinding.BindingAdapter;
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.databinding.BindingAdapter;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import cn.manfi.android.project.base.mvvm.command.ReplyCommand;
 

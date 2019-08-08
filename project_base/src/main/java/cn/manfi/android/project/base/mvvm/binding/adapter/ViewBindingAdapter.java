@@ -1,6 +1,6 @@
 package cn.manfi.android.project.base.mvvm.binding.adapter;
 
-import android.databinding.BindingAdapter;
+import androidx.databinding.BindingAdapter;
 import android.view.View;
 
 import cn.manfi.android.project.base.mvvm.command.ReplyCommand;

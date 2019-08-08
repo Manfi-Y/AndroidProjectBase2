@@ -1,7 +1,7 @@
 package cn.manfi.android.project.base.mvvm.binding.adapter;
 
-import android.databinding.BindingAdapter;
-import android.support.design.widget.TextInputLayout;
+import androidx.databinding.BindingAdapter;
+import com.google.android.material.textfield.TextInputLayout;
 
 public final class TextInputLayoutBindingAdapter {
 

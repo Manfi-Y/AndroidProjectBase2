@@ -1,6 +1,6 @@
 package cn.manfi.android.project.base.common.net.retrofit;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;

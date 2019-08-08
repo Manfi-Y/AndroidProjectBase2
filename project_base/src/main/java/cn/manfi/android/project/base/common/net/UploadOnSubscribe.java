@@ -1,6 +1,6 @@
 package cn.manfi.android.project.base.common.net;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
