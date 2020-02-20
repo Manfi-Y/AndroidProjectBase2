@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
     // RxBinding
     implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0'
+    implementation 'com.jakewharton.rxbinding3:rxbinding-core:3.0.0'
     implementation 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0'
     implementation 'com.jakewharton.rxbinding3:rxbinding-material:3.0.0'
 
